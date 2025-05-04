@@ -10,32 +10,51 @@ import {
 } from "@/components/ui/card";
 import Image from "next/image";
 import Link from "next/link";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+
 interface TeamProps {
   imageUrl: string;
   firstName: string;
   lastName: string;
   positions: string[];
   socialNetworks: SocialNetworkProps[];
+  description?: string;
 }
+
 interface SocialNetworkProps {
   name: string;
   url: string;
 }
+
 export const TeamSection = () => {
   const teamList: TeamProps[] = [
     {
-      imageUrl: "https://i.pravatar.cc/250?img=58",
-      firstName: "Leo",
-      lastName: "Miranda",
-      positions: ["Vue Fronted Developer", "Creator Of This Website"],
+      imageUrl: "/ceo.jpg",
+      firstName: "Vivek",
+      lastName: "Mishra",
+      positions: ["CEO & Founder"],
+      description: "A visionary entrepreneur driving the company's mission with clarity and bold leadership. Vivek combines strategic foresight with a passion for innovation to steer the team toward long-term impact and sustainable growth.",
       socialNetworks: [
         {
           name: "LinkedIn",
-          url: "https://www.linkedin.com/in/leopoldo-miranda/",
+          url: "https://www.linkedin.com/in/vivek-mishra-27622a1b7/",
         },
         {
-          name: "Github",
-          url: "https://github.com/leoMirandaa",
+          name: "X",
+          url: "https://x.com/VivekMi77834875",
+        },
+      ],
+    },
+    {
+      imageUrl: "/cto.jpg",
+      firstName: "Shrikrushna",
+      lastName: "P.",
+      positions: ["CTO & Co-founder"],
+      description: "Technical architect and innovation leader, Shrikrushna spearheads our technological advancements with expertise in cutting-edge solutions and a commitment to excellence in software development.",
+      socialNetworks: [
+        {
+          name: "LinkedIn",
+          url: "https://www.linkedin.com/in/shrikrushna-p-89a667334/",
         },
         {
           name: "X",
@@ -44,36 +63,19 @@ export const TeamSection = () => {
       ],
     },
     {
-      imageUrl:
-        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1528&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      firstName: "Elizabeth",
-      lastName: "Moore",
-      positions: ["UI/UX Designer"],
+      imageUrl: "/mediahead.jpg",
+      firstName: "Nikhil",
+      lastName: "R.",
+      positions: ["Head of Media"],
+      description: "Creative strategist and media expert, Nikhil leads our content and media initiatives with a keen eye for storytelling and a deep understanding of digital media landscapes.",
       socialNetworks: [
         {
           name: "LinkedIn",
-          url: "https://www.linkedin.com/in/leopoldo-miranda/",
+          url: "https://www.linkedin.com/in/nikhil-ranganekar-a63b88221/",
         },
         {
           name: "X",
           url: "https://x.com/leo_mirand4",
-        },
-      ],
-    },
-    {
-      imageUrl:
-        "https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=1760&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      firstName: "David",
-      lastName: "Diaz",
-      positions: ["Machine Learning Engineer", "TensorFlow Tinkerer"],
-      socialNetworks: [
-        {
-          name: "LinkedIn",
-          url: "https://www.linkedin.com/in/leopoldo-miranda/",
-        },
-        {
-          name: "Github",
-          url: "https://github.com/leoMirandaa",
         },
       ],
     },
@@ -83,6 +85,7 @@ export const TeamSection = () => {
       firstName: "Sarah",
       lastName: "Robinson",
       positions: ["Cloud Native Developer", " Kubernetes Orchestrator"],
+      description: "Cloud infrastructure specialist and DevOps expert, Sarah ensures our technical operations run smoothly with her expertise in cloud-native development and container orchestration.",
       socialNetworks: [
         {
           name: "LinkedIn",
@@ -99,12 +102,11 @@ export const TeamSection = () => {
       ],
     }
   ];
+
   const socialIcon = (socialName: string) => {
     switch (socialName) {
       case "LinkedIn":
         return <LinkedInIcon />;
-      case "Github":
-        return <GithubIcon />;
       case "X":
         return <XIcon />;
     }
@@ -118,14 +120,14 @@ export const TeamSection = () => {
         </h2>
 
         <h2 className="text-3xl md:text-4xl text-center font-bold">
-          The Company Dream Team
+          Visionaries Behind the Venture
         </h2>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         {teamList.map(
           (
-            { imageUrl, firstName, lastName, positions, socialNetworks },
+            { imageUrl, firstName, lastName, positions, socialNetworks, description },
             index
           ) => (
             <Card
@@ -154,8 +156,17 @@ export const TeamSection = () => {
                     index === positions.length - 1 && "pb-6"
                   }`}
                 >
-                  {position}
-                  {index < positions.length - 1 && <span>,</span>}
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger className="cursor-pointer">
+                        {position}
+                        {index < positions.length - 1 && <span>,</span>}
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-xs p-4">
+                        <p className="text-sm">{description}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </CardContent>
               ))}
 

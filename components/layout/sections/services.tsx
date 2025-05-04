@@ -10,7 +10,7 @@ import { Separator } from "@/components/ui/separator";
 
 interface ServiceProps {
   title: string;
-  description: string;
+  // description: string;
   features: string[];
   icon?: string;
 }
@@ -61,7 +61,7 @@ export const ServicesSection = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {serviceList.map(({ title, description, features }, index) => (
+        {serviceList.map(({ title,  features }, index) => (
           <Card
             key={title}
             className="bg-muted/60 dark:bg-card hover:bg-muted/80 transition-colors group h-full flex flex-col"
@@ -73,7 +73,7 @@ export const ServicesSection = () => {
                 </div>
                 <div>
                   <CardTitle className="text-xl">{title}</CardTitle>
-                  <CardDescription className="text-sm mt-1">{description}</CardDescription>
+                  {/* <CardDescription className="text-sm mt-1">{description}</CardDescription> */}
                 </div>
               </div>
             </CardHeader>
