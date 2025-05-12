@@ -34,7 +34,7 @@ const FAQList: FAQProps[] = [
   },
   {
     question: "What makes Malted Vision different from other marketing agencies?",
-    answer: "We live and breathe youth culture. Unlike traditional marketing agencies, we go beyond trends to co-create raw, unfiltered experiences that turn students into brand fans. Our AI tools + community-first approach ensures campaigns stay real and relevant.",
+    answer: "We live and breathe youth culture. Unlike traditional marketing agencies, we go beyond trends to co-create raw, unfiltered experiences that turn students into brand fans. Our tailored marketing strategy and community first approach ensures campaigns stay real and relevant.",
     value: "item-5",
   },
 ];

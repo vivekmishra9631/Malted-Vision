@@ -50,15 +50,26 @@ export const ContactSection = () => {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: { firstName: string; lastName: string; email: string; message: string }) {
     try {
-      // Here you can add your form submission logic
-      // For example, sending an email or storing in a different service
-      console.log(values);
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: `${values.firstName} ${values.lastName}`,
+          email: values.email,
+          message: values.message,
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error((await response.json()).message || "Failed to send message.");
+      }
+  
       toast.success("Message sent successfully!");
       form.reset();
     } catch (error) {
-      console.error(error);
+      console.error("Contact API error:", error);
       toast.error("Failed to send message. Please try again.");
     }
   }

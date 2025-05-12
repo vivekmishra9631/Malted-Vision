@@ -42,15 +42,24 @@ export interface ButtonProps
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
+
+    // 🔍 Debug: Log all props passed to Button
+    console.log("🔍 Button Props:", props)
+
+    // 🚫 Remove problematic attribute if present
+    const { fdprocessedid, ...safeProps } = props as any
+
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
-        {...props}
+        autoComplete="off" // helps avoid browser autofill interference
+        {...safeProps}
       />
     )
   }
 )
+
 Button.displayName = "Button"
 
 export { Button, buttonVariants }

@@ -33,7 +33,7 @@ export const TeamSection = () => {
       firstName: "Vivek",
       lastName: "Mishra",
       positions: ["CEO & Founder"],
-      description: "A visionary entrepreneur driving the company's mission with clarity and bold leadership. Vivek combines strategic foresight with a passion for innovation to steer the team toward long-term impact and sustainable growth.",
+      description: "As the Founder and CEO of Malted Vision, I help top-tier brands authentically connect with Gen Z through tailored marketing strategy. Malted Vision has a strong college network through 500+ campus ambassadors and reaching to more than 40000+ members.",
       socialNetworks: [
         {
           name: "LinkedIn",

@@ -54,11 +54,11 @@ export function CampusAmbassadorForm() {
   }
 
   return (
-    <div className="w-full max-w-md mx-auto p-6 bg-background rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold mb-4 text-center">Join Our Campus Ambassador Program</h2>
-      <p className="text-muted-foreground text-center mb-6">
+    <div className="w-full max-w-[90%] sm:max-w-md mx-auto p-4 sm:p-6 bg-background rounded-lg shadow-lg">
+      <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-center">Join Our Campus Ambassador Program</h2>
+      <p className="text-sm sm:text-base text-muted-foreground text-center mb-4 sm:mb-6">
         Become a part of our team and enjoy benefits like:
-        <ul className="list-disc list-inside mt-2 text-left">
+        <ul className="list-disc list-inside mt-2 text-left text-sm sm:text-base">
           <li>Internship Certificate</li>
           <li>Earning Opportunities</li>
           <li>Networking with Industry Professionals</li>
@@ -67,7 +67,7 @@ export function CampusAmbassadorForm() {
       </p>
       
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3 sm:space-y-4">
           <FormField
             control={form.control}
             name="fullName"

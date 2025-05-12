@@ -5,6 +5,9 @@ import { HeroSection } from "@/components/layout/sections/hero";
 import { ServicesSection } from "@/components/layout/sections/services";
 import { TeamSection } from "@/components/layout/sections/team";
 import { TestimonialSection } from "@/components/layout/sections/testimonial";
+import { PrismaClient } from "@/lib/generated/prisma";
+
+const prisma = new PrismaClient();
 
 export const metadata = {
   title: "Malted Vision",
@@ -36,6 +39,7 @@ export const metadata = {
 
 export default function Home() {
   return (
+    
     <>
       <HeroSection />
       <ServicesSection />

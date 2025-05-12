@@ -14,12 +14,12 @@ export function CampusAmbassadorDialog() {
       <DialogTrigger asChild>
         <Button 
           variant="outline" 
-          className="w-1/3 font-bold hover:bg-[#D247BF] hover:text-white transition-colors duration-300 border-2 border-[#D247BF]/50 text-foreground"
+          className="w-full sm:w-1/3 font-bold hover:bg-[#D247BF] hover:text-white transition-colors duration-300 border-2 border-[#D247BF]/50 text-foreground"
         >
           ✨ Be a Campus Influencer ✨
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="w-[95%] sm:max-w-[425px] max-h-[90vh] overflow-y-auto">
         <CampusAmbassadorForm />
       </DialogContent>
     </Dialog>

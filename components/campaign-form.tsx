@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/select";
 import { useRouter } from "next/navigation";
 import { DialogClose } from "@/components/ui/dialog";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   fullName: z.string()
@@ -57,24 +58,43 @@ export function CampaignForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Only proceed if all validations pass
-    if (form.formState.isValid) {
-      console.log(values);
-      // Here you would typically send the data to your backend
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const response = await fetch("/api/campaign", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Something went wrong");
+      }
+
+      toast.success("Campaign submitted successfully!");
+      form.reset();
       router.push("/");
+    } catch (error) {
+      console.error("Error submitting campaign:", error);
+      const errorMessage = error instanceof Error 
+        ? error.message 
+        : "Failed to submit campaign. Please try again.";
+      toast.error(errorMessage);
     }
   }
 
   return (
-    <div className="w-full max-w-md mx-auto p-6 bg-background rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold mb-6 text-center">Start Your Campaign</h2>
-      <p className="text-muted-foreground text-center mb-6">
+    <div className="w-full max-w-[90%] sm:max-w-md mx-auto p-4 sm:p-6 bg-background rounded-lg shadow-lg">
+      <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-center">Start Your Campaign</h2>
+      <p className="text-sm sm:text-base text-muted-foreground text-center mb-4 sm:mb-6">
         Ready to make noise where the youth lives? We curate influencer drops, campus takeovers, and UGC moments that drive real engagement.
       </p>
       
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3 sm:space-y-4">
           <FormField
             control={form.control}
             name="fullName"
