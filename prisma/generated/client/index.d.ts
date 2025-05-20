@@ -256,8 +256,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.7.0
-   * Query Engine version: 3cff47a7f5d65c3ea74883f1d736e41d68ce91ed
+   * Prisma Client JS version: 6.8.2
+   * Query Engine version: 2060c79ba17c6bb9f5823312b6f6b7f4a845738e
    */
   export type PrismaVersion = {
     client: string
@@ -4172,64 +4172,76 @@ export namespace Prisma {
 
   export type AggregateContactUs = {
     _count: ContactUsCountAggregateOutputType | null
+    _avg: ContactUsAvgAggregateOutputType | null
+    _sum: ContactUsSumAggregateOutputType | null
     _min: ContactUsMinAggregateOutputType | null
     _max: ContactUsMaxAggregateOutputType | null
   }
 
+  export type ContactUsAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type ContactUsSumAggregateOutputType = {
+    id: number | null
+  }
+
   export type ContactUsMinAggregateOutputType = {
-    id: string | null
     name: string | null
     email: string | null
     message: string | null
     createdAt: Date | null
-    updatedAt: Date | null
+    id: number | null
   }
 
   export type ContactUsMaxAggregateOutputType = {
-    id: string | null
     name: string | null
     email: string | null
     message: string | null
     createdAt: Date | null
-    updatedAt: Date | null
+    id: number | null
   }
 
   export type ContactUsCountAggregateOutputType = {
-    id: number
     name: number
     email: number
     message: number
     createdAt: number
-    updatedAt: number
+    id: number
     _all: number
   }
 
 
-  export type ContactUsMinAggregateInputType = {
+  export type ContactUsAvgAggregateInputType = {
     id?: true
+  }
+
+  export type ContactUsSumAggregateInputType = {
+    id?: true
+  }
+
+  export type ContactUsMinAggregateInputType = {
     name?: true
     email?: true
     message?: true
     createdAt?: true
-    updatedAt?: true
+    id?: true
   }
 
   export type ContactUsMaxAggregateInputType = {
-    id?: true
     name?: true
     email?: true
     message?: true
     createdAt?: true
-    updatedAt?: true
+    id?: true
   }
 
   export type ContactUsCountAggregateInputType = {
-    id?: true
     name?: true
     email?: true
     message?: true
     createdAt?: true
-    updatedAt?: true
+    id?: true
     _all?: true
   }
 
@@ -4271,6 +4283,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: ContactUsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ContactUsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: ContactUsMinAggregateInputType
@@ -4301,18 +4325,21 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: ContactUsCountAggregateInputType | true
+    _avg?: ContactUsAvgAggregateInputType
+    _sum?: ContactUsSumAggregateInputType
     _min?: ContactUsMinAggregateInputType
     _max?: ContactUsMaxAggregateInputType
   }
 
   export type ContactUsGroupByOutputType = {
-    id: string
     name: string
     email: string
     message: string
     createdAt: Date
-    updatedAt: Date
+    id: number
     _count: ContactUsCountAggregateOutputType | null
+    _avg: ContactUsAvgAggregateOutputType | null
+    _sum: ContactUsSumAggregateOutputType | null
     _min: ContactUsMinAggregateOutputType | null
     _max: ContactUsMaxAggregateOutputType | null
   }
@@ -4332,53 +4359,48 @@ export namespace Prisma {
 
 
   export type ContactUsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
     name?: boolean
     email?: boolean
     message?: boolean
     createdAt?: boolean
-    updatedAt?: boolean
+    id?: boolean
   }, ExtArgs["result"]["contactUs"]>
 
   export type ContactUsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
     name?: boolean
     email?: boolean
     message?: boolean
     createdAt?: boolean
-    updatedAt?: boolean
+    id?: boolean
   }, ExtArgs["result"]["contactUs"]>
 
   export type ContactUsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
     name?: boolean
     email?: boolean
     message?: boolean
     createdAt?: boolean
-    updatedAt?: boolean
+    id?: boolean
   }, ExtArgs["result"]["contactUs"]>
 
   export type ContactUsSelectScalar = {
-    id?: boolean
     name?: boolean
     email?: boolean
     message?: boolean
     createdAt?: boolean
-    updatedAt?: boolean
+    id?: boolean
   }
 
-  export type ContactUsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "message" | "createdAt" | "updatedAt", ExtArgs["result"]["contactUs"]>
+  export type ContactUsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"name" | "email" | "message" | "createdAt" | "id", ExtArgs["result"]["contactUs"]>
 
   export type $ContactUsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "ContactUs"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
-      id: string
       name: string
       email: string
       message: string
       createdAt: Date
-      updatedAt: Date
+      id: number
     }, ExtArgs["result"]["contactUs"]>
     composites: {}
   }
@@ -4462,8 +4484,8 @@ export namespace Prisma {
      * // Get first 10 Contactuses
      * const contactuses = await prisma.contactUs.findMany({ take: 10 })
      * 
-     * // Only select the `id`
-     * const contactUsWithIdOnly = await prisma.contactUs.findMany({ select: { id: true } })
+     * // Only select the `name`
+     * const contactUsWithNameOnly = await prisma.contactUs.findMany({ select: { name: true } })
      * 
      */
     findMany<T extends ContactUsFindManyArgs>(args?: SelectSubset<T, ContactUsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContactUsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -4507,9 +4529,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Create many Contactuses and only return the `id`
-     * const contactUsWithIdOnly = await prisma.contactUs.createManyAndReturn({
-     *   select: { id: true },
+     * // Create many Contactuses and only return the `name`
+     * const contactUsWithNameOnly = await prisma.contactUs.createManyAndReturn({
+     *   select: { name: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -4598,9 +4620,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Contactuses and only return the `id`
-     * const contactUsWithIdOnly = await prisma.contactUs.updateManyAndReturn({
-     *   select: { id: true },
+     * // Update zero or more Contactuses and only return the `name`
+     * const contactUsWithNameOnly = await prisma.contactUs.updateManyAndReturn({
+     *   select: { name: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -4802,12 +4824,11 @@ export namespace Prisma {
    * Fields of the ContactUs model
    */
   interface ContactUsFieldRefs {
-    readonly id: FieldRef<"ContactUs", 'String'>
     readonly name: FieldRef<"ContactUs", 'String'>
     readonly email: FieldRef<"ContactUs", 'String'>
     readonly message: FieldRef<"ContactUs", 'String'>
     readonly createdAt: FieldRef<"ContactUs", 'DateTime'>
-    readonly updatedAt: FieldRef<"ContactUs", 'DateTime'>
+    readonly id: FieldRef<"ContactUs", 'Int'>
   }
     
 
@@ -5225,12 +5246,11 @@ export namespace Prisma {
 
 
   export const ContactUsScalarFieldEnum: {
-    id: 'id',
     name: 'name',
     email: 'email',
     message: 'message',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    id: 'id'
   };
 
   export type ContactUsScalarFieldEnum = (typeof ContactUsScalarFieldEnum)[keyof typeof ContactUsScalarFieldEnum]
@@ -5296,6 +5316,20 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
   /**
    * Deep Input Types
@@ -5477,25 +5511,23 @@ export namespace Prisma {
     AND?: ContactUsWhereInput | ContactUsWhereInput[]
     OR?: ContactUsWhereInput[]
     NOT?: ContactUsWhereInput | ContactUsWhereInput[]
-    id?: StringFilter<"ContactUs"> | string
     name?: StringFilter<"ContactUs"> | string
     email?: StringFilter<"ContactUs"> | string
     message?: StringFilter<"ContactUs"> | string
     createdAt?: DateTimeFilter<"ContactUs"> | Date | string
-    updatedAt?: DateTimeFilter<"ContactUs"> | Date | string
+    id?: IntFilter<"ContactUs"> | number
   }
 
   export type ContactUsOrderByWithRelationInput = {
-    id?: SortOrder
     name?: SortOrder
     email?: SortOrder
     message?: SortOrder
     createdAt?: SortOrder
-    updatedAt?: SortOrder
+    id?: SortOrder
   }
 
   export type ContactUsWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
+    id?: number
     AND?: ContactUsWhereInput | ContactUsWhereInput[]
     OR?: ContactUsWhereInput[]
     NOT?: ContactUsWhereInput | ContactUsWhereInput[]
@@ -5503,31 +5535,30 @@ export namespace Prisma {
     email?: StringFilter<"ContactUs"> | string
     message?: StringFilter<"ContactUs"> | string
     createdAt?: DateTimeFilter<"ContactUs"> | Date | string
-    updatedAt?: DateTimeFilter<"ContactUs"> | Date | string
   }, "id">
 
   export type ContactUsOrderByWithAggregationInput = {
-    id?: SortOrder
     name?: SortOrder
     email?: SortOrder
     message?: SortOrder
     createdAt?: SortOrder
-    updatedAt?: SortOrder
+    id?: SortOrder
     _count?: ContactUsCountOrderByAggregateInput
+    _avg?: ContactUsAvgOrderByAggregateInput
     _max?: ContactUsMaxOrderByAggregateInput
     _min?: ContactUsMinOrderByAggregateInput
+    _sum?: ContactUsSumOrderByAggregateInput
   }
 
   export type ContactUsScalarWhereWithAggregatesInput = {
     AND?: ContactUsScalarWhereWithAggregatesInput | ContactUsScalarWhereWithAggregatesInput[]
     OR?: ContactUsScalarWhereWithAggregatesInput[]
     NOT?: ContactUsScalarWhereWithAggregatesInput | ContactUsScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"ContactUs"> | string
     name?: StringWithAggregatesFilter<"ContactUs"> | string
     email?: StringWithAggregatesFilter<"ContactUs"> | string
     message?: StringWithAggregatesFilter<"ContactUs"> | string
     createdAt?: DateTimeWithAggregatesFilter<"ContactUs"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"ContactUs"> | Date | string
+    id?: IntWithAggregatesFilter<"ContactUs"> | number
   }
 
   export type CampaignCreateInput = {
@@ -5720,66 +5751,56 @@ export namespace Prisma {
   }
 
   export type ContactUsCreateInput = {
-    id?: string
     name: string
     email: string
     message: string
     createdAt?: Date | string
-    updatedAt?: Date | string
   }
 
   export type ContactUsUncheckedCreateInput = {
-    id?: string
     name: string
     email: string
     message: string
     createdAt?: Date | string
-    updatedAt?: Date | string
+    id?: number
   }
 
   export type ContactUsUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ContactUsUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    id?: IntFieldUpdateOperationsInput | number
   }
 
   export type ContactUsCreateManyInput = {
-    id?: string
     name: string
     email: string
     message: string
     createdAt?: Date | string
-    updatedAt?: Date | string
+    id?: number
   }
 
   export type ContactUsUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ContactUsUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    id?: IntFieldUpdateOperationsInput | number
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -5921,31 +5942,63 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type ContactUsCountOrderByAggregateInput = {
-    id?: SortOrder
     name?: SortOrder
     email?: SortOrder
     message?: SortOrder
     createdAt?: SortOrder
-    updatedAt?: SortOrder
+    id?: SortOrder
+  }
+
+  export type ContactUsAvgOrderByAggregateInput = {
+    id?: SortOrder
   }
 
   export type ContactUsMaxOrderByAggregateInput = {
-    id?: SortOrder
     name?: SortOrder
     email?: SortOrder
     message?: SortOrder
     createdAt?: SortOrder
-    updatedAt?: SortOrder
+    id?: SortOrder
   }
 
   export type ContactUsMinOrderByAggregateInput = {
-    id?: SortOrder
     name?: SortOrder
     email?: SortOrder
     message?: SortOrder
     createdAt?: SortOrder
-    updatedAt?: SortOrder
+    id?: SortOrder
+  }
+
+  export type ContactUsSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -5954,6 +6007,14 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -6021,6 +6082,33 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
 

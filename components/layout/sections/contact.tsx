@@ -50,30 +50,33 @@ export const ContactSection = () => {
     },
   });
 
-  async function onSubmit(values: { firstName: string; lastName: string; email: string; message: string }) {
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: `${values.firstName} ${values.lastName}`,
-          email: values.email,
-          message: values.message,
-        }),
-      });
-  
-      if (!response.ok) {
-        throw new Error((await response.json()).message || "Failed to send message.");
-      }
-  
-      toast.success("Message sent successfully!");
-      form.reset();
-    } catch (error) {
-      console.error("Contact API error:", error);
-      toast.error("Failed to send message. Please try again.");
-    }
-  }
+  // Update onSubmit in ContactSection
+async function onSubmit(values: { firstName: string; lastName: string; email: string; message: string }) {
+  try {
+    const response = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: `${values.firstName} ${values.lastName}`,
+        email: values.email,
+        message: values.message,
+      }),
+    });
 
+    const responseData = await response.json();
+    console.log("Backend response:", responseData);
+
+    if (!response.ok) {
+      throw new Error(responseData.message || "Failed to send message.");
+    }
+
+    toast.success("Message sent successfully!");
+    form.reset();
+  } catch (error) {
+    console.error("Contact API error:", error);
+    toast.error("Failed to send message. Please try again.");
+  }
+}
   return (
     <section id="contact" className="container py-24 sm:py-32">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
