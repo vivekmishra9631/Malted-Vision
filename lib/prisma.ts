@@ -1,4 +1,3 @@
-// C:\Users\krish\Desktop\mVision\Malted-Vision\lib\prisma.ts
 import { PrismaClient } from '@prisma/client';
 
 console.log('NODE_ENV:', process.env.NODE_ENV);
@@ -14,13 +13,12 @@ try {
   if (!globalForPrisma.prisma) {
     console.log('Creating new PrismaClient');
     globalForPrisma.prisma = new PrismaClient({
-      log: ['query', 'info', 'warn', 'error'], // Enable detailed logging
+      log: ['query', 'info', 'warn', 'error'],
     });
   }
   prisma = globalForPrisma.prisma;
   console.log('Prisma Client assigned:', prisma);
 
-  // Test connection
   await prisma.$connect();
   console.log('Prisma Client connected to database');
 } catch (error) {

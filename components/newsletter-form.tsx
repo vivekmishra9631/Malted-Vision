@@ -15,6 +15,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+
 const formSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
 });
@@ -29,9 +31,9 @@ export function NewsletterForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      console.log("📤 Sending data:", values);
+      console.log("📤 Sending data to /api/newsletter:", values);
 
-      const response = await fetch("/api/newsletter", {
+      const response = await fetch(`${API_URL}/api/newsletter`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,23 +42,60 @@ export function NewsletterForm() {
       });
 
       const data = await response.json();
-      console.log("📥 Response received:", data);
+      console.log("📥 Response received:", {
+        status: response.status,
+        statusText: response.statusText,
+        data,
+      });
 
       if (!response.ok) {
-        throw new Error(data.message || "Something went wrong");
+        console.error("❌ Request failed with status:", response.status, "and message:", data.message);
+        throw new Error(data.message || `Request failed with status ${response.status}`);
       }
 
-      toast.success("Successfully subscribed to the newsletter!");
+      console.log("✅ Newsletter subscription successful at", new Date().toISOString());
+
+      toast.success("Successfully subscribed", {
+        description: "You're now subscribed to Malted Vision's newsletter!",
+        duration: 3000,
+        style: {
+          fontSize: "14px",
+          padding: "8px 16px",
+          borderRadius: "8px",
+          backgroundColor: "#22c55e",
+          color: "#fff",
+        },
+      });
       form.reset();
     } catch (error) {
-      console.error("❌ Subscription error:", error);
-      toast.error(
-        error instanceof Error
-          ? error.message
-          : "Failed to subscribe. Please try again."
-      );
+      const errorMessage =
+        error instanceof Error ? error.message : "Failed to subscribe. Please try again.";
+      console.error("❌ Newsletter subscription failed:", errorMessage);
+
+      toast.error("Subscription Failed", {
+        description: errorMessage,
+        duration: 3000,
+        style: {
+          fontSize: "14px",
+          padding: "8px 16px",
+          borderRadius: "8px",
+          backgroundColor: "#ef4444",
+          color: "#fff",
+        },
+      });
+    } finally {
+      // Reset form state to ensure isSubmitting is cleared
+      form.resetForm();
+      console.log("🔄 Form state reset after submission");
     }
   }
+
+  // Debug form state
+  console.log("🔔 Form state:", {
+    isValid: form.formState.isValid,
+    isSubmitting: form.formState.isSubmitting,
+    errors: form.formState.errors,
+  });
 
   return (
     <div className="w-full max-w-[90%] sm:max-w-md mx-auto p-4 sm:p-6 bg-background rounded-lg shadow-lg">
@@ -87,6 +126,10 @@ export function NewsletterForm() {
                     autoComplete="email"
                     placeholder="Enter your email"
                     {...field}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      console.log("📧 Email input changed:", e.target.value);
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -97,7 +140,7 @@ export function NewsletterForm() {
           <Button
             type="submit"
             className="w-full"
-            disabled={form.formState.isSubmitting}
+            disabled={form.formState.isSubmitting || !form.formState.isValid}
           >
             {form.formState.isSubmitting ? "Submitting..." : "Subscribe"}
           </Button>

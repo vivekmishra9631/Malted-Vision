@@ -11,6 +11,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     console.log("📨 Parsed request body:", body);
     console.log("📧 Extracted email:", email);
 
+    // Validate email format
     if (
       !email ||
       typeof email !== "string" ||
@@ -22,7 +23,16 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     console.log("✅ Email passed validation:", email);
 
-    // 👇 FIX IS HERE — use `newsletterSubscriber` not `NewsletterSubscriber`
+    // Test database connection
+    try {
+      await prisma.$connect();
+      console.log("✅ Database connection successful");
+    } catch (dbError) {
+      console.error("❌ Database connection error:", dbError);
+      throw new Error("Failed to connect to database");
+    }
+
+    // Check for existing subscriber
     const existing = await prisma.newsletterSubscriber.findUnique({
       where: { email },
     });
@@ -34,6 +44,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     console.log("🆕 Email is new, proceeding to subscribe...");
 
+    // Create new subscriber
     const subscriber = await prisma.newsletterSubscriber.create({
       data: { email },
     });
@@ -48,10 +59,17 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     console.error("❌ Newsletter API error occurred:", error);
     return NextResponse.json(
       {
-        message: "Internal server error",
+        message: error instanceof Error ? error.message : "Internal server error",
         error: error instanceof Error ? error.message : "Unknown error",
       },
       { status: 500 }
     );
+  } finally {
+    try {
+      await prisma.$disconnect();
+      console.log("🔌 Database connection closed");
+    } catch (disconnectError) {
+      console.error("❌ Error disconnecting from database:", disconnectError);
+    }
   }
 }

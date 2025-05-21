@@ -48,35 +48,44 @@ export const ContactSection = () => {
       email: "",
       message: "",
     },
+    mode: "onChange", // Enable real-time validation
   });
 
-  // Update onSubmit in ContactSection
-async function onSubmit(values: { firstName: string; lastName: string; email: string; message: string }) {
-  try {
-    const response = await fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: `${values.firstName} ${values.lastName}`,
-        email: values.email,
-        message: values.message,
-      }),
-    });
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: `${values.firstName} ${values.lastName}`,
+          email: values.email,
+          message: values.message,
+        }),
+      });
 
-    const responseData = await response.json();
-    console.log("Backend response:", responseData);
+      const responseData = await response.json();
+      console.log("Backend response:", responseData);
 
-    if (!response.ok) {
-      throw new Error(responseData.message || "Failed to send message.");
+      if (!response.ok) {
+        throw new Error(
+          responseData.message || "Failed to send message."
+        );
+      }
+
+      toast.success("Message sent successfully!");
+      form.reset();
+    } catch (error) {
+      console.error("Contact API error:", error);
+      const errorMessage =
+        error instanceof Error
+          ? error.message === "This email has already submitted a contact form"
+            ? "This email has already been used to send a message."
+            : error.message
+          : "Failed to send message. Please try again.";
+      toast.error(errorMessage);
     }
-
-    toast.success("Message sent successfully!");
-    form.reset();
-  } catch (error) {
-    console.error("Contact API error:", error);
-    toast.error("Failed to send message. Please try again.");
   }
-}
+
   return (
     <section id="contact" className="container py-24 sm:py-32">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -93,8 +102,8 @@ async function onSubmit(values: { firstName: string; lastName: string; email: st
 
           <div className="space-y-6">
             <div className="flex items-center gap-4">
-              <Link 
-                href="https://maltedvision.com" 
+              <Link
+                href="https://maltedvision.com"
                 target="_blank"
                 className="text-muted-foreground hover:text-primary transition-colors"
               >
@@ -104,8 +113,8 @@ async function onSubmit(values: { firstName: string; lastName: string; email: st
 
             <div className="flex items-center gap-4">
               <Mail className="h-5 w-5 text-muted-foreground" />
-              <Link 
-                href="mailto:maltedvision@gmail.com?subject=Contact from Website" 
+              <Link
+                href="mailto:maltedvision@gmail.com?subject=Contact from Website"
                 className="text-muted-foreground hover:text-primary transition-colors"
                 title="Send us an email"
               >
@@ -115,8 +124,8 @@ async function onSubmit(values: { firstName: string; lastName: string; email: st
 
             <div className="flex items-center gap-4">
               <Instagram className="h-5 w-5 text-muted-foreground" />
-              <Link 
-                href="https://instagram.com/maltedvision" 
+              <Link
+                href="https://instagram.com/maltedvision"
                 target="_blank"
                 className="text-muted-foreground hover:text-primary transition-colors"
               >
@@ -126,8 +135,8 @@ async function onSubmit(values: { firstName: string; lastName: string; email: st
 
             <div className="flex items-center gap-4">
               <Linkedin className="h-5 w-5 text-muted-foreground" />
-              <Link 
-                href="https://www.linkedin.com/company/malted-vision/" 
+              <Link
+                href="https://www.linkedin.com/company/malted-vision/"
                 target="_blank"
                 className="text-muted-foreground hover:text-primary transition-colors"
               >
@@ -137,8 +146,8 @@ async function onSubmit(values: { firstName: string; lastName: string; email: st
 
             <div className="flex items-center gap-4">
               <X className="h-5 w-5 text-muted-foreground" />
-              <Link 
-                href="https://x.com/maltedvision" 
+              <Link
+                href="https://x.com/maltedvision"
                 target="_blank"
                 className="text-muted-foreground hover:text-primary transition-colors"
               >
@@ -151,7 +160,7 @@ async function onSubmit(values: { firstName: string; lastName: string; email: st
         {/* Right Column - Contact Form */}
         <div>
           <Card className="bg-muted/60 dark:bg-card">
-            <CardHeader className="text-primary text-2xl"> </CardHeader>
+            <CardHeader className="text-primary text-2xl"></CardHeader>
             <CardContent>
               <Form {...form}>
                 <form
@@ -219,8 +228,12 @@ async function onSubmit(values: { firstName: string; lastName: string; email: st
                     )}
                   />
 
-                  <Button type="submit" className="w-full">
-                    Send Message
+                  <Button
+                    type="submit"
+                    className="w-full"
+                    disabled={form.formState.isSubmitting || !form.formState.isValid}
+                  >
+                    {form.formState.isSubmitting ? "Sending..." : "Send Message"}
                   </Button>
                 </form>
               </Form>

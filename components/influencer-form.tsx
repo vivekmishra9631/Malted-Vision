@@ -15,16 +15,17 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { DialogClose } from "@/components/ui/dialog";
 
 const formSchema = z.object({
-  fullName: z.string()
+  fullName: z
+    .string()
     .min(2, "Full name must be at least 2 characters")
     .max(50, "Full name must be less than 50 characters"),
-  email: z.string()
-    .email("Please enter a valid email address"),
-  collegeName: z.string()
-    .min(2, "College name is required"),
-  phoneNumber: z.string()
+  email: z.string().email("Please enter a valid email address"),
+  collegeName: z.string().min(2, "College name is required"),
+  phoneNumber: z
+    .string()
     .min(10, "Please enter a valid phone number")
     .max(15, "Phone number is too long"),
 });
@@ -40,30 +41,64 @@ export function InfluencerForm() {
       collegeName: "",
       phoneNumber: "",
     },
-    mode: "onChange", // allows validation feedback before submission
+    mode: "onChange",
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    console.log("📤 Starting form submission with values:", values);
+    console.log("🌐 Current window location:", window.location.href);
+
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
+
       const res = await fetch("/api/influencer", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(values),
+        signal: controller.signal,
+      }).catch((err) => {
+        console.error("❌ Fetch error:", err);
+        throw new Error(err.message || "Network error occurred");
       });
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Something went wrong");
+      clearTimeout(timeoutId);
+
+      console.log("📥 Fetch response status:", res.status);
+      console.log("📥 Fetch response headers:", [...res.headers.entries()]);
+
+      const data = await res.json().catch((err) => {
+        console.error("❌ JSON parse error:", err);
+        throw new Error("Failed to parse response");
+      });
+      console.log("📥 Response data:", data);
+
+      if (!res.ok) {
+        throw new Error(data.message || "Something went wrong");
+      }
 
       toast.success("Application submitted successfully!");
       form.reset();
       router.push("/");
     } catch (err) {
+      console.error("❌ Error during form submission:", err);
       const msg =
-        err instanceof Error ? err.message : "Submission failed. Try again.";
+        err instanceof Error
+          ? err.message === "This email has already registered as a campus influencer"
+            ? "This email is already registered."
+            : err.message
+          : "Submission failed. Please try again.";
       toast.error(msg);
     }
+  };
+
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log("🖱️ Form submit event triggered");
+    form.handleSubmit(onSubmit)();
   };
 
   return (
@@ -77,7 +112,7 @@ export function InfluencerForm() {
 
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(onSubmit)}
+          onSubmit={handleFormSubmit}
           className="space-y-3 sm:space-y-4"
         >
           {["fullName", "email", "collegeName", "phoneNumber"].map((field) => (
@@ -87,7 +122,13 @@ export function InfluencerForm() {
               name={field as keyof z.infer<typeof formSchema>}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="capitalize">{field.name === "collegeName" ? "College Name" : field.name === "phoneNumber" ? "Phone Number" : field.name.replace(/([A-Z])/g, ' $1')}</FormLabel>
+                  <FormLabel className="capitalize">
+                    {field.name === "collegeName"
+                      ? "College Name"
+                      : field.name === "phoneNumber"
+                      ? "Phone Number"
+                      : field.name.replace(/([A-Z])/g, " $1")}
+                  </FormLabel>
                   <FormControl>
                     <Input
                       type={
@@ -98,7 +139,11 @@ export function InfluencerForm() {
                           : "text"
                       }
                       placeholder={`Enter your ${
-                        field.name === "collegeName" ? "college name" : field.name === "phoneNumber" ? "phone number" : field.name.replace(/([A-Z])/g, " $1").toLowerCase()
+                        field.name === "collegeName"
+                          ? "college name"
+                          : field.name === "phoneNumber"
+                          ? "phone number"
+                          : field.name.replace(/([A-Z])/g, " $1").toLowerCase()
                       }`}
                       {...field}
                     />
@@ -109,13 +154,24 @@ export function InfluencerForm() {
             />
           ))}
 
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={!form.formState.isValid || form.formState.isSubmitting}
-          >
-            {form.formState.isSubmitting ? "Submitting..." : "Submit Application"}
-          </Button>
+          <div className="flex justify-end gap-3">
+            <DialogClose asChild>
+              <Button
+                type="button"
+                variant="outline"
+                disabled={form.formState.isSubmitting}
+              >
+                Cancel
+              </Button>
+            </DialogClose>
+            <Button
+              type="submit"
+              className="w-full sm:w-auto"
+              disabled={!form.formState.isValid || form.formState.isSubmitting}
+            >
+              {form.formState.isSubmitting ? "Submitting..." : "Submit Application"}
+            </Button>
+          </div>
         </form>
       </Form>
     </div>
