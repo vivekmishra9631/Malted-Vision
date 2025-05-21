@@ -13,14 +13,14 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import Image1 from "../../../public/Artboard 1.png";
 import Image2 from "../../../public/Artboard 2.png";
 import Image3 from "../../../public/Artboard 3.png";
 import Image4 from "../../../public/Artboard 4.png";
 
 interface ReviewProps {
-  image: string;
+  image: StaticImageData;
   name: string;
   review: string;
   rating: number;
