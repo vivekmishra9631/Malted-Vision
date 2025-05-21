@@ -18,9 +18,6 @@ try {
   }
   prisma = globalForPrisma.prisma;
   console.log('Prisma Client assigned:', prisma);
-
-  await prisma.$connect();
-  console.log('Prisma Client connected to database');
 } catch (error) {
   console.error('Prisma Client initialization error:', error);
   throw error;

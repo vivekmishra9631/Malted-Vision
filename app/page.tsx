@@ -5,21 +5,21 @@ import { HeroSection } from "@/components/layout/sections/hero";
 import { ServicesSection } from "@/components/layout/sections/services";
 import { TeamSection } from "@/components/layout/sections/team";
 import { TestimonialSection } from "@/components/layout/sections/testimonial";
-import { PrismaClient } from "@/lib/generated/prisma";
 
-const prisma = new PrismaClient();
+// Removed unused PrismaClient import and instantiation
+// Prisma should be imported where needed (e.g., API routes) via lib/prisma.ts
 
 export const metadata = {
   title: "Malted Vision",
-  description: "Connecting Brands withGen ZThrough Authentic Voices",
+  description: "Connecting Brands with Gen Z Through Authentic Voices",
   openGraph: {
     type: "website",
-    url: "https://github.com/nobruf/shadcn-landing-page.git",
+    url: "https://your-vercel-app.vercel.app", // Replace with your actual deployed URL
     title: "Malted Vision",
     description: "Connecting Brands with Gen Z Through Authentic Voices",
     images: [
       {
-        src: "../public/og-images/mvblack.png",
+        url: "/og-images/mvblack.png", // Fixed path: removed ../public, use root-relative path
         width: 1200,
         height: 630,
         alt: "Malted Vision",
@@ -28,18 +28,17 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    site: "https://github.com/nobruf/shadcn-landing-page.git",
+    site: "https://your-vercel-app.vercel.app", // Replace with your actual deployed URL
     title: "Malted Vision",
     description: "Connecting Brands with Gen Z Through Authentic Voices",
     images: [
-      "https://res.cloudinary.com/dbzv9xfjp/image/upload/v1723499276/og-images/shadcn-vue.jpg",
+      "https://res.cloudinary.com/dbzv9xfjp/image/upload/v1723499276/og-images/shadcn-vue.jpg", // Ensure this URL is accessible
     ],
   },
 };
 
 export default function Home() {
   return (
-    
     <>
       <HeroSection />
       <ServicesSection />

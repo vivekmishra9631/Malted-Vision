@@ -26,7 +26,7 @@ export default function CampaignAIPage() {
           <div className="relative bg-background/50 p-8 rounded-lg border border-primary/20">
             <h2 className="text-2xl font-bold text-primary mb-4">Coming Soon</h2>
             <p className="text-muted-foreground">
-              We're working hard to bring you AI-powered campaign strategies. Stay tuned for updates!
+              We&apos;re working hard to bring you AI-powered campaign strategies. Stay tuned for updates!
             </p>
           </div>
         </div>
@@ -42,4 +42,4 @@ export default function CampaignAIPage() {
       </div>
     </div>
   );
-} 
+}

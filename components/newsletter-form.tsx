@@ -141,7 +141,6 @@ export function NewsletterForm() {
                 <FormControl>
                   <Input
                     id="newsletter-email"
-                    name="email"
                     type="email"
                     autoComplete="email"
                     placeholder="Enter your email"
