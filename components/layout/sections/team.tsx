@@ -58,7 +58,7 @@ export const TeamSection = () => {
         },
         {
           name: "X",
-          url: "https://x.com/leo_mirand4",
+          url: "https://x.com/shrikrushna2004",
         },
       ],
     },
@@ -75,7 +75,7 @@ export const TeamSection = () => {
         },
         {
           name: "X",
-          url: "https://x.com/leo_mirand4",
+          url: "https://x.com/nikhilranganekar",
         },
       ],
     },
