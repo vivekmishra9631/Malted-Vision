@@ -1,4 +1,3 @@
-// C:\Users\krish\Desktop\mVision\Malted-Vision\app\api\contact\route.ts
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
@@ -30,7 +29,8 @@ export async function POST(request: Request) {
     );
   } catch (error) {
     console.error("API Error:", error);
-    console.error("Error stack:", error.stack);
+    // Narrow the type of error to Error
+    console.error("Error stack:", error instanceof Error ? error.stack : "No stack available");
 
     if (error instanceof z.ZodError) {
       return NextResponse.json(
@@ -42,7 +42,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         message: error instanceof Error ? error.message : "Internal server error",
-        error: error.message || "Unknown error",
+        error: error instanceof Error ? error.message : "Unknown error",
       },
       { status: 500 }
     );
