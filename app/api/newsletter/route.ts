@@ -1,29 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 
+const formSchema = z.object({
+  email: z.string().email("Please enter a valid email address"),
+});
+
 export async function POST(req: NextRequest): Promise<NextResponse> {
-  console.log("📥 Newsletter API triggered");
+  console.log("📩 Received newsletter subscription request");
 
   try {
     const body = await req.json();
-    const { email } = body;
+    console.log("🟢 Request body:", body);
 
-    console.log("📨 Parsed request body:", body);
-    console.log("📧 Extracted email:", email);
+    const validatedData = formSchema.parse(body);
+    console.log("✅ Validated data:", validatedData);
 
-    // Validate email format
-    if (
-      !email ||
-      typeof email !== "string" ||
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-    ) {
-      console.warn("⚠️ Invalid email format received:", email);
-      return NextResponse.json({ message: "Invalid email format" }, { status: 400 });
-    }
-
-    console.log("✅ Email passed validation:", email);
-
-    // Test database connection
     try {
       await prisma.$connect();
       console.log("✅ Database connection successful");
@@ -32,38 +24,79 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       throw new Error("Failed to connect to database");
     }
 
-    // Check for existing subscriber
-    const existing = await prisma.newsletterSubscriber.findUnique({
-      where: { email },
-    });
+    const tableExistsResult = await prisma.$queryRawUnsafe<any[]>(`
+      SELECT EXISTS (
+        SELECT FROM information_schema.tables 
+        WHERE table_schema = 'public' AND table_name = 'NewsletterSubscriber'
+      );
+    `);
+    const tableExists = tableExistsResult[0]?.exists;
+    console.log("📦 NewsletterSubscriber table exists:", tableExists);
 
-    if (existing) {
-      console.warn("⚠️ Email already in database:", existing);
-      return NextResponse.json({ message: "Email already subscribed" }, { status: 409 });
+    if (!tableExists) {
+      throw new Error("❌ NewsletterSubscriber table does not exist in the database");
     }
 
-    console.log("🆕 Email is new, proceeding to subscribe...");
-
-    // Create new subscriber
-    const subscriber = await prisma.newsletterSubscriber.create({
-      data: { email },
+    const existingSubscriber = await prisma.newsletterSubscriber.findUnique({
+      where: { email: validatedData.email },
     });
 
-    console.log("🎉 New subscription added to DB:", subscriber);
+    if (existingSubscriber) {
+      console.warn("⚠️ Email already subscribed:", existingSubscriber.email);
+      const response = NextResponse.json(
+        { message: "Email already subscribed" },
+        { status: 409 }
+      );
+      response.headers.set("Access-Control-Allow-Origin", "*");
+      response.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+      response.headers.set("Access-Control-Allow-Headers", "Content-Type");
+      return response;
+    }
 
-    return NextResponse.json(
+    const subscriber = await prisma.newsletterSubscriber.create({
+      data: { email: validatedData.email },
+    });
+
+    console.log("✅ Newsletter subscription created:", subscriber);
+
+    const response = NextResponse.json(
       { message: "Successfully subscribed", subscriber },
       { status: 201 }
     );
+    response.headers.set("Access-Control-Allow-Origin", "*");
+    response.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+    response.headers.set("Access-Control-Allow-Headers", "Content-Type");
+    return response;
   } catch (error) {
-    console.error("❌ Newsletter API error occurred:", error);
-    return NextResponse.json(
+    console.error("🔥 Error in newsletter API:", error);
+    console.error(
+      "Error stack:",
+      error instanceof Error ? error.stack : "No stack available"
+    );
+
+    if (error instanceof z.ZodError) {
+      console.error("Validation errors:", error.errors);
+      const response = NextResponse.json(
+        { message: "Validation failed", errors: error.errors },
+        { status: 400 }
+      );
+      response.headers.set("Access-Control-Allow-Origin", "*");
+      response.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+      response.headers.set("Access-Control-Allow-Headers", "Content-Type");
+      return response;
+    }
+
+    const response = NextResponse.json(
       {
         message: error instanceof Error ? error.message : "Internal server error",
         error: error instanceof Error ? error.message : "Unknown error",
       },
       { status: 500 }
     );
+    response.headers.set("Access-Control-Allow-Origin", "*");
+    response.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+    response.headers.set("Access-Control-Allow-Headers", "Content-Type");
+    return response;
   } finally {
     try {
       await prisma.$disconnect();
@@ -72,4 +105,15 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       console.error("❌ Error disconnecting from database:", disconnectError);
     }
   }
+}
+
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 204,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+    },
+  });
 }

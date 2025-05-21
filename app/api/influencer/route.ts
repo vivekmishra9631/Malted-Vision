@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma"; // Use the shared Prisma client instance
 import { z } from "zod";
+import { prisma } from "@/lib/prisma";
 
 const formSchema = z.object({
   fullName: z
@@ -16,17 +16,15 @@ const formSchema = z.object({
 });
 
 export async function POST(request: Request) {
-  console.log("🔵 Received influencer application request");
+  console.log("📩 Received influencer application request");
 
   try {
     const body = await request.json();
     console.log("🟢 Request body:", body);
 
-    // Validate the request body
     const validatedData = formSchema.parse(body);
     console.log("✅ Validated data:", validatedData);
 
-    // Test database connection
     try {
       await prisma.$connect();
       console.log("✅ Database connection successful");
@@ -35,7 +33,6 @@ export async function POST(request: Request) {
       throw new Error("Failed to connect to database");
     }
 
-    // Check if the table exists
     const tableExistsResult = await prisma.$queryRawUnsafe<any[]>(`
       SELECT EXISTS (
         SELECT FROM information_schema.tables 
@@ -49,7 +46,6 @@ export async function POST(request: Request) {
       throw new Error("❌ CampusInfluencer table does not exist in the database");
     }
 
-    // Check for existing influencer by email to avoid duplicates
     const existingInfluencer = await prisma.campusInfluencer.findUnique({
       where: { email: validatedData.email },
     });
@@ -57,12 +53,11 @@ export async function POST(request: Request) {
     if (existingInfluencer) {
       console.warn("⚠️ Email already registered:", existingInfluencer.email);
       return NextResponse.json(
-        { message: "Email already registered as a campus influencer" },
+        { message: "This email has already registered as a campus influencer" },
         { status: 409 }
       );
     }
 
-    // Create the influencer entry
     const influencer = await prisma.campusInfluencer.create({
       data: {
         fullName: validatedData.fullName,
@@ -80,6 +75,10 @@ export async function POST(request: Request) {
     );
   } catch (error) {
     console.error("🔥 Error in influencer API:", error);
+    console.error(
+      "Error stack:",
+      error instanceof Error ? error.stack : "No stack available"
+    );
 
     if (error instanceof z.ZodError) {
       console.error("Validation errors:", error.errors);
@@ -104,4 +103,15 @@ export async function POST(request: Request) {
       console.error("❌ Error disconnecting from database:", disconnectError);
     }
   }
+}
+
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 204,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+    },
+  });
 }

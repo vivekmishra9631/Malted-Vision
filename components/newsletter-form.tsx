@@ -14,6 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { DialogClose } from "@/components/ui/dialog";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
@@ -27,26 +28,42 @@ export function NewsletterForm() {
     defaultValues: {
       email: "",
     },
+    mode: "onChange",
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    try {
-      console.log("📤 Sending data to /api/newsletter:", values);
+    console.log("📤 Sending data to /api/newsletter:", values);
+    console.log("🌐 Current window location:", window.location.href);
 
-      const response = await fetch(`${API_URL}/api/newsletter`, {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+      const endpoint = `${API_URL}/api/newsletter`;
+      console.log("🌍 Fetching endpoint:", endpoint);
+
+      const response = await fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(values),
+        signal: controller.signal,
+      }).catch((err) => {
+        console.error("❌ Fetch error:", err);
+        throw new Error(err.message || "Network error occurred");
       });
 
-      const data = await response.json();
-      console.log("📥 Response received:", {
-        status: response.status,
-        statusText: response.statusText,
-        data,
+      clearTimeout(timeoutId);
+
+      console.log("📥 Fetch response status:", response.status);
+      console.log("📥 Fetch response headers:", [...response.headers.entries()]);
+
+      const data = await response.json().catch((err) => {
+        console.error("❌ JSON parse error:", err);
+        throw new Error("Failed to parse response");
       });
+      console.log("📥 Response data:", data);
 
       if (!response.ok) {
         console.error("❌ Request failed with status:", response.status, "and message:", data.message);
@@ -84,13 +101,18 @@ export function NewsletterForm() {
         },
       });
     } finally {
-      // Reset form state to ensure isSubmitting is cleared
       form.resetForm();
       console.log("🔄 Form state reset after submission");
     }
   }
 
-  // Debug form state
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log("🖱️ Form submit event triggered");
+    form.handleSubmit(onSubmit)();
+  };
+
   console.log("🔔 Form state:", {
     isValid: form.formState.isValid,
     isSubmitting: form.formState.isSubmitting,
@@ -108,7 +130,7 @@ export function NewsletterForm() {
 
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(onSubmit)}
+          onSubmit={handleFormSubmit}
           className="space-y-3 sm:space-y-4"
           aria-labelledby="newsletter-heading"
         >
@@ -137,13 +159,24 @@ export function NewsletterForm() {
             )}
           />
 
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={form.formState.isSubmitting || !form.formState.isValid}
-          >
-            {form.formState.isSubmitting ? "Submitting..." : "Subscribe"}
-          </Button>
+          <div className="flex justify-end gap-3">
+            <DialogClose asChild>
+              <Button
+                type="button"
+                variant="outline"
+                disabled={form.formState.isSubmitting}
+              >
+                Cancel
+              </Button>
+            </DialogClose>
+            <Button
+              type="submit"
+              className="w-full sm:w-auto"
+              disabled={form.formState.isSubmitting || !form.formState.isValid}
+            >
+              {form.formState.isSubmitting ? "Submitting..." : "Subscribe"}
+            </Button>
+          </div>
         </form>
       </Form>
     </div>
