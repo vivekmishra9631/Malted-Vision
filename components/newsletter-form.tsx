@@ -16,8 +16,6 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { DialogClose } from "@/components/ui/dialog";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
-
 const formSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
 });
@@ -39,7 +37,7 @@ export function NewsletterForm() {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 10000);
 
-      const endpoint = `${API_URL}/api/newsletter`;
+      const endpoint = "/api/newsletter";
       console.log("🌍 Fetching endpoint:", endpoint);
 
       const response = await fetch(endpoint, {
@@ -101,7 +99,7 @@ export function NewsletterForm() {
         },
       });
     } finally {
-      form.resetForm();
+      form.reset(); // Replace form.resetForm() with form.reset()
       console.log("🔄 Form state reset after submission");
     }
   }
