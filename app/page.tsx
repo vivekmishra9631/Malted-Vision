@@ -22,15 +22,15 @@ export const metadata = {
         src: "../public/og-images/mvblack.png",
         width: 1200,
         height: 630,
-        alt: "Shadcn - Landing template",
+        alt: "Malted Vision",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
     site: "https://github.com/nobruf/shadcn-landing-page.git",
-    title: "Shadcn - Landing template",
-    description: "Free Shadcn landing page for developers",
+    title: "Malted Vision",
+    description: "Connecting Brands with Gen Z Through Authentic Voices",
     images: [
       "https://res.cloudinary.com/dbzv9xfjp/image/upload/v1723499276/og-images/shadcn-vue.jpg",
     ],
