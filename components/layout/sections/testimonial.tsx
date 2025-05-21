@@ -29,25 +29,25 @@ interface ReviewProps {
 const reviewList: ReviewProps[] = [
   {
     image: Image1,
-    name: "John Doe",
+    name: "Campa Energy",
     review: "Malted Vision transformed our brand's social media presence with stunning visuals and strategic campaigns!",
     rating: 5,
   },
   {
     image: Image2,
-    name: "Sophia Collins",
+    name: "Krafton",
     review: "Their influencer marketing approach delivered incredible engagement. Highly recommend!",
     rating: 4,
   },
   {
     image: Image3,
-    name: "Adam Johnson",
+    name: "Thums Up Charged",
     review: "Professional, creative, and results-driven. Our campaign exceeded all expectations.",
     rating: 5,
   },
   {
     image: Image4,
-    name: "Ethan Parker",
+    name: "ICICI Bank",
     review: "The team’s expertise in content creation made our brand stand out. Amazing work!",
     rating: 4,
   },
