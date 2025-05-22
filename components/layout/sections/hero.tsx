@@ -1,7 +1,7 @@
 "use client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Instagram, Youtube, Camera, TrendingUp } from "lucide-react";
+import { ArrowRight, Instagram, Youtube, Camera, TrendingUp, Sparkles, BarChart, Palette } from "lucide-react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { CampaignDialog } from "@/components/campaign-dialog";
@@ -86,20 +86,43 @@ export const HeroSection = () => {
               </div>
             </div>
 
-            {/* Call-to-Action Card */}
-            <div className="flex-1 text-center md:text-left space-y-3 sm:space-y-4">
-              <h4 className="text-lg sm:text-xl md:text-2xl font-semibold">
-                Ready to Amplify Your Brand?
-              </h4>
-              <p className="text-muted-foreground text-sm sm:text-base">
-                Join 1000+ brands reaching Gen Z through our creator network.
-              </p>
-              <Button asChild variant="outline" className="group text-sm sm:text-base py-2 sm:py-3">
-                <Link href="/" className="flex items-center gap-2">
-                  Get Started
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </Button>
+            {/* Service Preview Card */}
+            <div className="relative flex-1 h-56 sm:h-64 md:h-80 lg:h-96 rounded-lg bg-gradient-to-r from-primary to-[#D247BF] flex items-center justify-center">
+              <div className="absolute inset-0 bg-black/20 rounded-lg"></div>
+              <div className="relative text-center text-white space-y-3 sm:space-y-4 px-4 sm:px-6">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold">
+                  What We Offer
+                </h3>
+                <p className="text-xs sm:text-sm md:text-base">
+                  Tailored solutions to connect your brand with Gen Z.
+                </p>
+                <div className="space-y-2 sm:space-y-3">
+                  <div className="flex justify-center items-center gap-2 sm:gap-3">
+                    <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white" />
+                    <p className="text-xs sm:text-sm md:text-base">
+                      Creator-Led Campaigns
+                    </p>
+                  </div>
+                  <div className="flex justify-center items-center gap-2 sm:gap-3">
+                    <BarChart className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white" />
+                    <p className="text-xs sm:text-sm md:text-base">
+                      Trend-Driven Strategies
+                    </p>
+                  </div>
+                  <div className="flex justify-center items-center gap-2 sm:gap-3">
+                    <Palette className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white" />
+                    <p className="text-xs sm:text-sm md:text-base">
+                      Gen Z Insights
+                    </p>
+                  </div>
+                </div>
+                <Button asChild variant="outline" className="group text-xs sm:text-sm py-2 sm:py-3 bg-background/10 border-white/30 text-white hover:bg-white/20">
+                  <Link href="/#services" className="flex items-center gap-2">
+                    Explore Our Services
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
 
