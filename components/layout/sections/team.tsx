@@ -1,3 +1,5 @@
+"use client";
+
 import GithubIcon from "@/components/icons/github-icon";
 import LinkedInIcon from "@/components/icons/linkedin-icon";
 import XIcon from "@/components/icons/x-icon";
@@ -79,52 +81,38 @@ export const TeamSection = () => {
         },
       ],
     },
-    {
-      imageUrl:
-        "https://images.unsplash.com/photo-1573497161161-c3e73707e25c?q=80&w=1587&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      firstName: "Sarah",
-      lastName: "Robinson",
-      positions: ["Cloud Native Developer", " Kubernetes Orchestrator"],
-      description: "Cloud infrastructure specialist and DevOps expert, Sarah ensures our technical operations run smoothly with her expertise in cloud-native development and container orchestration.",
-      socialNetworks: [
-        {
-          name: "LinkedIn",
-          url: "https://www.linkedin.com/in/leopoldo-miranda/",
-        },
-        {
-          name: "Github",
-          url: "https://github.com/leoMirandaa",
-        },
-        {
-          name: "X",
-          url: "https://x.com/leo_mirand4",
-        },
-      ],
-    }
+    // Removed Sarah Robinson's entry; can add a new team member here in the future
   ];
 
   const socialIcon = (socialName: string) => {
     switch (socialName) {
       case "LinkedIn":
-        return <LinkedInIcon />;
+        return <LinkedInIcon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" />;
+      case "Github":
+        return <GithubIcon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" />;
       case "X":
-        return <XIcon />;
+        return <XIcon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" />;
+      default:
+        return null;
     }
   };
 
   return (
-    <section id="team" className="container lg:w-[75%] py-24 sm:py-32">
-      <div className="text-center mb-8">
-        <h2 className="text-lg text-primary text-center mb-2 tracking-wider">
+    <section
+      id="team"
+      className="container mx-auto py-12 xs:py-16 sm:py-24 md:py-32 min-h-[50vh] flex flex-col justify-center items-center"
+    >
+      <div className="text-center mb-4 xs:mb-6 sm:mb-8">
+        <h2 className="text-sm xs:text-base sm:text-lg text-primary text-center mb-1 xs:mb-2 sm:mb-3 tracking-wider">
           Team
         </h2>
 
-        <h2 className="text-3xl md:text-4xl text-center font-bold">
+        <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center font-bold">
           Visionaries Behind the Venture
         </h2>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 xs:gap-6 sm:gap-8 w-full max-w-6xl justify-items-center">
         {teamList.map(
           (
             { imageUrl, firstName, lastName, positions, socialNetworks, description },
@@ -132,7 +120,7 @@ export const TeamSection = () => {
           ) => (
             <Card
               key={index}
-              className="bg-muted/60 dark:bg-card flex flex-col h-full overflow-hidden group/hoverimg"
+              className="bg-muted/60 dark:bg-card flex flex-col h-full overflow-hidden group/hoverimg max-w-sm"
             >
               <CardHeader className="p-0 gap-0">
                 <div className="h-full overflow-hidden">
@@ -144,16 +132,16 @@ export const TeamSection = () => {
                     className="w-full aspect-square object-cover saturate-0 transition-all duration-200 ease-linear size-full group-hover/hoverimg:saturate-100 group-hover/hoverimg:scale-[1.01]"
                   />
                 </div>
-                <CardTitle className="py-6 pb-4 px-6">
+                <CardTitle className="py-4 xs:py-5 sm:py-6 pb-3 xs:pb-4 sm:pb-4 px-4 xs:px-5 sm:px-6 text-base xs:text-lg sm:text-xl">
                   {firstName}
-                  <span className="text-primary ml-2">{lastName}</span>
+                  <span className="text-primary ml-1 xs:ml-2">{lastName}</span>
                 </CardTitle>
               </CardHeader>
               {positions.map((position, index) => (
                 <CardContent
                   key={index}
-                  className={`pb-0 text-muted-foreground ${
-                    index === positions.length - 1 && "pb-6"
+                  className={`pb-0 text-muted-foreground text-xs xs:text-sm sm:text-base ${
+                    index === positions.length - 1 && "pb-4 xs:pb-5 sm:pb-6"
                   }`}
                 >
                   <TooltipProvider>
@@ -162,15 +150,15 @@ export const TeamSection = () => {
                         {position}
                         {index < positions.length - 1 && <span>,</span>}
                       </TooltipTrigger>
-                      <TooltipContent className="max-w-xs p-4">
-                        <p className="text-sm">{description}</p>
+                      <TooltipContent className="max-w-[90%] sm:max-w-xs p-2 sm:p-4">
+                        <p className="text-xs xs:text-sm sm:text-base">{description}</p>
                       </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>
                 </CardContent>
               ))}
 
-              <CardFooter className="space-x-4 mt-auto">
+              <CardFooter className="space-x-2 xs:space-x-3 sm:space-x-4 mt-auto">
                 {socialNetworks.map(({ name, url }, index) => (
                   <Link
                     key={index}
