@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     description: "Connecting Brands with Gen Z Through Authentic Voices",
     images: [
       {
-        url: "https://res.cloudinary.com/dbzv9xfjp/image/upload/v1723499276/og-images/shadcn-vue.jpg",
+        url: "/og-images/mvblack.png", // Updated to match app/page.tsx
         width: 1200,
         height: 630,
         alt: "Malted Vision",
@@ -36,9 +36,9 @@ export const metadata: Metadata = {
     ],
   },
   icons: {
-    icon: "/favicon.ico", // Favicon for browser tabs
-    apple: "/apple-touch-icon.png", // Apple Touch Icon for iOS
-    shortcut: "/favicon.ico", // Fallback for older browsers
+    icon: "/mvblack.png", // Updated to use mvblack.png as the favicon
+    apple: "/mvblack.png", // Use the same image for Apple Touch Icon (resized to 180x180 if needed)
+    shortcut: "/mvblack.png", // Fallback for older browsers
   },
 };
 
