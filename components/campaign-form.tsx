@@ -101,8 +101,9 @@ export function CampaignForm() {
       }
 
       console.log("✅ Campaign submission successful at", new Date().toISOString());
+      console.log("🔔 Triggering success toast...");
 
-      toast.success("Campaign submitted successfully!", {
+      toast.success("Response saved successfully", {
         description: "Your campaign has been submitted to Malted Vision.",
         duration: 3000,
         style: {
@@ -111,10 +112,20 @@ export function CampaignForm() {
           borderRadius: "8px",
           backgroundColor: "#22c55e",
           color: "#fff",
+          zIndex: 9999, // Ensure toast appears above dialog
         },
       });
+
+      console.log("🔄 Form state before reset:", form.formState);
       form.reset();
-      router.push("/");
+      console.log("🔄 Form state after reset:", form.formState);
+
+      // Delay redirect to allow toast to display
+      console.log("⏳ Delaying redirect for 3 seconds to show toast...");
+      setTimeout(() => {
+        console.log("➡️ Redirecting to homepage...");
+        router.push("/");
+      }, 3000);
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Failed to submit campaign. Please try again.";
@@ -129,10 +140,11 @@ export function CampaignForm() {
           borderRadius: "8px",
           backgroundColor: "#ef4444",
           color: "#fff",
+          zIndex: 9999,
         },
       });
     } finally {
-      form.reset();
+      // Reset form in finally block (already handled above, but keeping for consistency)
       console.log("🔄 Form state reset after submission");
     }
   }
@@ -151,24 +163,26 @@ export function CampaignForm() {
   });
 
   return (
-    <div className="w-full max-w-[90%] sm:max-w-md mx-auto p-4 sm:p-6 bg-background rounded-lg shadow-lg">
-      <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-center">Start Your Campaign</h2>
-      <p className="text-sm sm:text-base text-muted-foreground text-center mb-4 sm:mb-6">
+    <div className="w-full max-w-[90%] sm:max-w-md md:max-w-lg mx-auto p-3 xs:p-4 sm:p-6 bg-background rounded-lg shadow-lg">
+      <h2 className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold mb-2 xs:mb-3 sm:mb-4 text-center">
+        Start Your Campaign
+      </h2>
+      <p className="text-xs xs:text-sm sm:text-base md:text-lg text-muted-foreground text-center mb-3 xs:mb-4 sm:mb-6">
         Ready to make noise where the youth lives? We curate influencer drops, campus takeovers, and UGC moments that drive real engagement.
       </p>
 
       <Form {...form}>
-        <form onSubmit={handleFormSubmit} className="space-y-3 sm:space-y-4">
+        <form onSubmit={handleFormSubmit} className="space-y-2 xs:space-y-3 sm:space-y-4">
           <FormField
             control={form.control}
             name="fullName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Full Name</FormLabel>
+                <FormLabel className="text-xs xs:text-sm sm:text-base">Full Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter your full name" {...field} />
+                  <Input placeholder="Enter your full name" {...field} className="text-xs xs:text-sm sm:text-base" />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-xs xs:text-sm" />
               </FormItem>
             )}
           />
@@ -178,11 +192,11 @@ export function CampaignForm() {
             name="brandName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Brand Name</FormLabel>
+                <FormLabel className="text-xs xs:text-sm sm:text-base">Brand Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter your brand name" {...field} />
+                  <Input placeholder="Enter your brand name" {...field} className="text-xs xs:text-sm sm:text-base" />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-xs xs:text-sm" />
               </FormItem>
             )}
           />
@@ -192,11 +206,11 @@ export function CampaignForm() {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel className="text-xs xs:text-sm sm:text-base">Email</FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder="Enter your email" {...field} />
+                  <Input type="email" placeholder="Enter your email" {...field} className="text-xs xs:text-sm sm:text-base" />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-xs xs:text-sm" />
               </FormItem>
             )}
           />
@@ -206,22 +220,22 @@ export function CampaignForm() {
             name="campaignBudget"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Campaign Budget</FormLabel>
+                <FormLabel className="text-xs xs:text-sm sm:text-base">Campaign Budget</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger className="text-xs xs:text-sm sm:text-base">
                       <SelectValue placeholder="Select budget range" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="100-1k">$100 - $1,000</SelectItem>
-                    <SelectItem value="1k-5k">$1,000 - $5,000</SelectItem>
-                    <SelectItem value="5k-10k">$5,000 - $10,000</SelectItem>
-                    <SelectItem value="10k-25k">$10,000 - $25,000</SelectItem>
-                    <SelectItem value="25k+">$25,000+</SelectItem>
+                    <SelectItem value="100-1k" className="text-xs xs:text-sm sm:text-base">$100 - $1,000</SelectItem>
+                    <SelectItem value="1k-5k" className="text-xs xs:text-sm sm:text-base">$1,000 - $5,000</SelectItem>
+                    <SelectItem value="5k-10k" className="text-xs xs:text-sm sm:text-base">$5,000 - $10,000</SelectItem>
+                    <SelectItem value="10k-25k" className="text-xs xs:text-sm sm:text-base">$10,000 - $25,000</SelectItem>
+                    <SelectItem value="25k+" className="text-xs xs:text-sm sm:text-base">$25,000+</SelectItem>
                   </SelectContent>
                 </Select>
-                <FormMessage />
+                <FormMessage className="text-xs xs:text-sm" />
               </FormItem>
             )}
           />
@@ -231,28 +245,29 @@ export function CampaignForm() {
             name="cityCountry"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>City / Country</FormLabel>
+                <FormLabel className="text-xs xs:text-sm sm:text-base">City / Country</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter your city and country" {...field} />
+                  <Input placeholder="Enter your city and country" {...field} className="text-xs xs:text-sm sm:text-base" />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-xs xs:text-sm" />
               </FormItem>
             )}
           />
 
-          <div className="flex justify-end gap-3">
+          <div className="flex flex-col sm:flex-row justify-end gap-2 xs:gap-3">
             <DialogClose asChild>
               <Button
                 type="button"
                 variant="outline"
                 disabled={form.formState.isSubmitting}
+                className="w-full sm:w-auto text-xs xs:text-sm sm:text-base"
               >
                 Cancel
               </Button>
             </DialogClose>
             <Button
               type="submit"
-              className="w-full sm:w-auto"
+              className="w-full sm:w-auto text-xs xs:text-sm sm:text-base"
               disabled={form.formState.isSubmitting || !form.formState.isValid}
             >
               {form.formState.isSubmitting ? "Submitting..." : "Launch with Malted"}
