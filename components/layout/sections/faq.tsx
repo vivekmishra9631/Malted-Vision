@@ -34,7 +34,11 @@ const FAQList: FAQProps[] = [
   },
   {
     question: "What makes Malted Vision different from other marketing agencies?",
-    answer: "We live and breathe youth culture. Unlike traditional marketing agencies, we go beyond trends to co-create raw, unfiltered experiences that turn students into brand fans. Our tailored marketing strategy and community first approach ensures campaigns stay real and relevant.",
+    answer: "At Malted Vision, we don’t just follow youth culture—we help shape it. Unlike traditional agencies, we co-create authentic, unfiltered experiences that turn students into passionate brand advocates. Our community-first approach and tailored strategies ensure every campaign resonates with the real interests of young audiences.
+
+What sets us apart is our data-driven edge. Every activation is guided by deep audience insights and real-time analytics, allowing us to plan, optimize, and deliver measurable ROI. We go beyond execution—providing brands with actionable recommendations to maximize impact.
+
+Looking ahead, data analytics is our game-changer. With predictive insights and real-time feedback, we help brands anticipate trends, personalize engagement, and stay ahead of the curve. Malted Vision is where cultural intuition meets analytical precision—delivering campaigns that truly connect with the next generation.",
     value: "item-5",
   },
 ];
