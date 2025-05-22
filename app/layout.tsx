@@ -58,7 +58,6 @@ export default function RootLayout({
         >
           <Navbar />
           <main className="flex-1 w-full">{children}</main>
-          <FooterSection />
           <Toaster richColors position="top-right" />
         </ThemeProvider>
       </body>
