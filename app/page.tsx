@@ -14,7 +14,7 @@ export const metadata = {
   description: "Connecting Brands with Gen Z Through Authentic Voices",
   openGraph: {
     type: "website",
-    url: "https://your-vercel-app.vercel.app", // Replace with your actual deployed URL
+    url: "https://www.maltedvision.com/", // Replace with your actual deployed URL
     title: "Malted Vision",
     description: "Connecting Brands with Gen Z Through Authentic Voices",
     images: [
@@ -28,7 +28,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    site: "https://your-vercel-app.vercel.app", // Replace with your actual deployed URL
+    site: "https://www.maltedvision.com/", // Replace with your actual deployed URL
     title: "Malted Vision",
     description: "Connecting Brands with Gen Z Through Authentic Voices",
     images: [
