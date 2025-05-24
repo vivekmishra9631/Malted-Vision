@@ -4,13 +4,13 @@
 1. Clone this repository:
 
 ```bash
-git clone https://github.com/nobruf/shadcn-landing-page.git
+https://github.com/vivekmishra9631/Malted-Vision.git
 ```
 
 2. Go into project
 
 ```bash
-cd shadcn-landing-page
+cd Malted-Vision
 ```
 
 3. Install dependencies
