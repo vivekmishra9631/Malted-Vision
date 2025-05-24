@@ -37,9 +37,14 @@ interface FeatureProps {
 
 const routeList: RouteProps[] = [
   {
+    href: "#home",
+    label: "Home",
+  },
+  {
     href: "/about",
     label: "About",
   },
+
   {
     href: "#services",
     label: "Services",
@@ -180,10 +185,10 @@ export const Navbar = () => {
         <NavigationMenuList>
           <NavigationMenuItem>
             {[
-              {
-                href: "#home",
-                label: "Home",
-              },
+              // {
+              //   href: "#home",
+              //   label: "Home",
+              // },
               ...routeList
             ].map(({ href, label }) => (
               <NavigationMenuLink key={href} asChild>
