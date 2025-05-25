@@ -51,7 +51,7 @@ export const TeamSection = () => {
       imageUrl: "/cto.jpg",
       firstName: "Shrikrushna",
       lastName: "P.",
-      positions: ["CTO & Co-founder"],
+      positions: ["COO & Co-founder"],
       description: "Technical architect and innovation leader, Shrikrushna spearheads our technological advancements with expertise in cutting-edge solutions and a commitment to excellence in software development.",
       socialNetworks: [
         {
