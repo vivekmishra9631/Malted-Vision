@@ -17,7 +17,7 @@ export const metadata = {
     description: "Connecting Brands with Gen Z Through Authentic Voices",
     images: [
       {
-        url: "/og-images/mvblack.png",
+        url: "/og-images/logo.png",
         width: 1200,
         height: 630,
         alt: "Malted Vision",
