@@ -35,7 +35,7 @@ export const TeamSection = () => {
       firstName: "Vivek",
       lastName: "Mishra",
       positions: ["CEO & Founder"],
-      description: "As the Founder and CEO of Malted Vision, I help top-tier brands authentically connect with Gen Z through tailored marketing strategy. Malted Vision has a strong college network through 500+ campus ambassadors and reaching to more than 40000+ members.",
+      description: "Turning ‘meh’ into ‘send this to the group chat’ for brands.",
       socialNetworks: [
         {
           name: "LinkedIn",
@@ -52,7 +52,7 @@ export const TeamSection = () => {
       firstName: "Shrikrushna",
       lastName: "P.",
       positions: ["COO & Co-founder"],
-      description: "Technical architect and innovation leader, Shrikrushna spearheads our technological advancements with expertise in cutting-edge solutions and a commitment to excellence in software development.",
+      description: "Turning Gen Z chaos into campaign gold (and still finding time for chai).",
       socialNetworks: [
         {
           name: "LinkedIn",
@@ -69,7 +69,7 @@ export const TeamSection = () => {
       firstName: "Nikhil",
       lastName: "R.",
       positions: ["Head of Media"],
-      description: "Creative strategist and media expert, Nikhil leads our content and media initiatives with a keen eye for storytelling and a deep understanding of digital media landscapes.",
+      description: "I don’t make ads—I make scroll-stoppers your ex shares.",
       socialNetworks: [
         {
           name: "LinkedIn",
