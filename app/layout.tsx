@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     description: "Connecting Brands with Gen Z Through Authentic Voices",
     images: [
       {
-        url: "/og-images/mvblack.png", // Updated to match app/page.tsx
+        url: "/og-images/logo.png", // Updated to match app/page.tsx
         width: 1200,
         height: 630,
         alt: "Malted Vision",
@@ -36,9 +36,9 @@ export const metadata: Metadata = {
     ],
   },
   icons: {
-    icon: "/mvblack.png", // Updated to use mvblack.png as the favicon
-    apple: "/mvblack.png", // Use the same image for Apple Touch Icon (resized to 180x180 if needed)
-    shortcut: "/mvblack.png", // Fallback for older browsers
+    icon: "/og-images/logo.png", // Updated to use mvblack.png as the favicon
+    apple: "/og-images/logo.png", // Use the same image for Apple Touch Icon (resized to 180x180 if needed)
+    shortcut: "/og-images/logo.png", // Fallback for older browsers
   },
 };
 
