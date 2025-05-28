@@ -1,6 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
+import mailchimp from "@mailchimp/mailchimp_marketing";
+
+// Configure Mailchimp client
+mailchimp.setConfig({
+  apiKey: process.env.MAILCHIMP_API_KEY,
+  server: process.env.MAILCHIMP_SERVER_PREFIX, // e.g., "us6"
+});
 
 const formSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -42,7 +49,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     });
 
     if (existingSubscriber) {
-      console.warn("⚠️ Email already subscribed:", existingSubscriber.email);
+      console.warn("⚠️ Email already subscribed in database:", existingSubscriber.email);
       const response = NextResponse.json(
         { message: "Email already subscribed" },
         { status: 409 }
@@ -53,11 +60,32 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       return response;
     }
 
+    // Add subscriber to the database
     const subscriber = await prisma.newsletterSubscriber.create({
       data: { email: validatedData.email },
     });
+    console.log("✅ Newsletter subscription created in database:", subscriber);
 
-    console.log("✅ Newsletter subscription created:", subscriber);
+    // Add subscriber to Mailchimp audience
+    try {
+      const audienceId = process.env.MAILCHIMP_AUDIENCE_ID!;
+      const mailchimpResponse = await mailchimp.lists.addListMember(audienceId, {
+        email_address: validatedData.email,
+        status: "subscribed", // Use "pending" if you want double opt-in
+      });
+      console.log("✅ Added to Mailchimp audience:", mailchimpResponse);
+    } catch (mailchimpError: any) {
+      console.error("❌ Mailchimp Error:", mailchimpError.response?.text || mailchimpError.message);
+      
+      // Log the error but don't fail the request since database operation succeeded
+      if (mailchimpError.response?.status === 400 && mailchimpError.response?.text) {
+        const errorDetails = JSON.parse(mailchimpError.response.text);
+        if (errorDetails.title === "Member Exists") {
+          console.warn("⚠️ Email already exists in Mailchimp:", validatedData.email);
+        }
+      }
+      // Optionally, you could store this error in the database for later review
+    }
 
     const response = NextResponse.json(
       { message: "Successfully subscribed", subscriber },

@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { DialogClose } from "@/components/ui/dialog";
+import { Loader2 } from "lucide-react"; // For loading spinner
 
 const formSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -65,12 +66,18 @@ export function NewsletterForm() {
 
       if (!response.ok) {
         console.error("❌ Request failed with status:", response.status, "and message:", data.message);
+        if (response.status === 409) {
+          throw new Error("This email is already subscribed to our newsletter.");
+        }
+        if (response.status === 400 && data.errors) {
+          throw new Error("Please enter a valid email address.");
+        }
         throw new Error(data.message || `Request failed with status ${response.status}`);
       }
 
       console.log("✅ Newsletter subscription successful at", new Date().toISOString());
 
-      toast.success("Successfully subscribed", {
+      toast.success("Successfully Subscribed", {
         description: "You're now subscribed to Malted Vision's newsletter!",
         duration: 3000,
         style: {
@@ -81,7 +88,8 @@ export function NewsletterForm() {
           color: "#fff",
         },
       });
-      form.reset();
+
+      form.reset(); // Reset only on success
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Failed to subscribe. Please try again.";
@@ -98,9 +106,6 @@ export function NewsletterForm() {
           color: "#fff",
         },
       });
-    } finally {
-      form.reset(); // Replace form.resetForm() with form.reset()
-      console.log("🔄 Form state reset after submission");
     }
   }
 
@@ -149,9 +154,13 @@ export function NewsletterForm() {
                       field.onChange(e);
                       console.log("📧 Email input changed:", e.target.value);
                     }}
+                    aria-invalid={!!form.formState.errors.email}
+                    aria-describedby={
+                      form.formState.errors.email ? "newsletter-email-error" : undefined
+                    }
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage id="newsletter-email-error" />
               </FormItem>
             )}
           />
@@ -171,7 +180,14 @@ export function NewsletterForm() {
               className="w-full sm:w-auto"
               disabled={form.formState.isSubmitting || !form.formState.isValid}
             >
-              {form.formState.isSubmitting ? "Submitting..." : "Subscribe"}
+              {form.formState.isSubmitting ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Submitting...
+                </>
+              ) : (
+                "Subscribe"
+              )}
             </Button>
           </div>
         </form>

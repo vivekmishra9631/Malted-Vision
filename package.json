@@ -11,6 +11,7 @@
   "dependencies": {
     "@devnomic/marquee": "^1.0.2",
     "@hookform/resolvers": "^3.9.0",
+    "@mailchimp/mailchimp_marketing": "^3.0.80",
     "@prisma/client": "^6.8.2",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-avatar": "^1.0.4",
@@ -42,6 +43,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/mailchimp__mailchimp_marketing": "^3.0.21",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
