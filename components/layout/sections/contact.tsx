@@ -118,7 +118,7 @@ export const ContactSection = () => {
                 className="text-muted-foreground hover:text-primary transition-colors"
                 title="Send us an email"
               >
-                maltedvision@gmail.com
+                partnership@maltedvision.com
               </Link>
             </div>
 
