@@ -23,7 +23,7 @@ export const FooterSection = () => {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-0">
           <Link href="#" className="flex font-bold items-center">
             <Image 
-              src={resolvedTheme === "dark" ? "/mvwhite.png" : "/mvblack.png"}
+              src={resolvedTheme === "dark" ? "/mvblack.png" : "/mvblack.png"}
               alt="Malted Vision Logo" 
               width={36} 
               height={36} 

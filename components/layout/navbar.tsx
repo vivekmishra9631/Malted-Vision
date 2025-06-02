@@ -115,7 +115,7 @@ export const Navbar = () => {
     <header className="shadow-inner bg-opacity-15 w-[90%] md:w-[70%] lg:w-[75%] lg:max-w-screen-xl top-5 mx-auto sticky border border-secondary z-40 rounded-2xl flex justify-between items-center p-2 bg-card">
       <Link href="/" className="font-bold text-lg flex items-center">
         <Image 
-          src={resolvedTheme === "dark" ? "/mvwhite.png" : "/mvblack.png"}
+          src={resolvedTheme === "dark" ? "/mvblack.png" : "/mvblack.png"}
           alt="Malted Vision Logo" 
           width={36} 
           height={36} 
