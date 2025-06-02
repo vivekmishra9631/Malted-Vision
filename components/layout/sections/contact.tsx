@@ -114,7 +114,7 @@ export const ContactSection = () => {
             <div className="flex items-center gap-4">
               <Mail className="h-5 w-5 text-muted-foreground" />
               <Link
-                href="mailto:maltedvision@gmail.com?subject=Contact from Website"
+                href="mailto:partnership@maltedvision.com?subject=Contact%20from%20Website&body=Hello%20Malted%20Vision%20Team,%0D%0A%0D%0AI%20would%20like%20to%20discuss%20a%20potential%20partnership.%0D%0A%0D%0ARegards,"
                 className="text-muted-foreground hover:text-primary transition-colors"
                 title="Send us an email"
               >
