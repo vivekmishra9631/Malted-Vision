@@ -23,7 +23,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ToggleTheme } from "./toogle-theme";
 import { useTheme } from "next-themes";
-import { usePathname } from "next/navigation"; // Import usePathname
+import { usePathname } from "next/navigation";
 
 interface RouteProps {
   href: string;
@@ -44,7 +44,10 @@ const routeList: RouteProps[] = [
     href: "/about",
     label: "About",
   },
-
+  {
+    href: "/community", // Added Community page link
+    label: "Community",
+  },
   {
     href: "#services",
     label: "Services",
@@ -88,7 +91,7 @@ export const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const pathname = usePathname(); // Get the current pathname
+  const pathname = usePathname();
 
   useEffect(() => {
     setMounted(true);
@@ -98,15 +101,11 @@ export const Navbar = () => {
     return null;
   }
 
-  // Function to adjust href based on current page
   const getAdjustedHref = (href: string) => {
-    // If href is "/about", keep it as is (it's a full page route)
-    if (href === "/about") {
+    if (href === "/about" || href === "/community") { // Updated to include /community
       return href;
     }
-    // If href starts with "#", it's a section link
     if (href.startsWith("#")) {
-      // If not on the homepage, prepend "/" to navigate to homepage with section hash
       return pathname === "/" ? href : `/${href}`;
     }
     return href;
@@ -184,13 +183,7 @@ export const Navbar = () => {
       <NavigationMenu className="hidden lg:block mx-auto">
         <NavigationMenuList>
           <NavigationMenuItem>
-            {[
-              // {
-              //   href: "#home",
-              //   label: "Home",
-              // },
-              ...routeList
-            ].map(({ href, label }) => (
+            {routeList.map(({ href, label }) => (
               <NavigationMenuLink key={href} asChild>
                 <Link 
                   href={getAdjustedHref(href)} 
