@@ -143,7 +143,7 @@ export const Navbar = () => {
                 <SheetTitle className="flex items-center">
                   <Link href="/" className="flex items-center">
                     <Image 
-                      src={resolvedTheme === "dark" ? "/mvwhite.png" : "/mvblack.png"}
+                      src={resolvedTheme === "dark" ? "/mvblack.png" : "/mvblack.png"}
                       alt="Malted Vision Logo" 
                       width={36} 
                       height={36} 
