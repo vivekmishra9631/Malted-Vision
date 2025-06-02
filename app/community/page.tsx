@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import Link from "next/link"; // Add this import
+import Link from "next/link";
 
 export default function Community() {
   const fadeIn = {
@@ -21,8 +21,10 @@ export default function Community() {
 
   return (
     <section className="container py-12 sm:py-16 md:py-20 lg:py-24 relative overflow-hidden">
+      {/* Keep the vertical gradient for a subtle background */}
       <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background to-background/80 -z-10" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/0.15),transparent_60%)] -z-10" />
+      {/* Removed the radial gradient to fix alignment issue */}
+      {/* <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/0.15),transparent_60%)] -z-10" /> */}
 
       <motion.div
         className="max-w-screen-xl mx-auto space-y-12"
@@ -307,21 +309,6 @@ export default function Community() {
             </ul>
           </CardContent>
         </Card>
-
-        {/* Citations Section */}
-        <div className="text-sm text-muted-foreground">
-          <h3 className="text-lg font-semibold text-foreground mb-2">Citations</h3>
-          <ul className="list-disc list-inside space-y-1">
-            <li><Link href="https://antavo.com/blog/how-to-engage-gen-z-customers/" target="_blank" className="underline hover:text-primary">Antavo: How to Engage Gen Z Customers</Link></li>
-            <li><Link href="https://queue-it.com/blog/loyalty-program-examples/" target="_blank" className="underline hover:text-primary">Queue-it: Loyalty Program Examples</Link></li>
-            <li><Link href="https://www.zinrelo.com/blog/cracking-the-code-of-gen-z-loyalty-programs/" target="_blank" className="underline hover:text-primary">Zinrelo: Cracking the Code of Gen Z Loyalty Programs</Link></li>
-            <li><Link href="https://loudcrowd.com/blog/engaging-gen-z-brand-ambassador/" target="_blank" className="underline hover:text-primary">LoudCrowd: Engaging Gen Z Brand Ambassador</Link></li>
-            <li><Link href="https://referralrock.com/blog/loyalty-program-examples/" target="_blank" className="underline hover:text-primary">ReferralRock: Loyalty Program Examples</Link></li>
-            <li><Link href="https://www.getsaral.com/academy/influencer-program-examples" target="_blank" className="underline hover:text-primary">GetSaral: Influencer Program Examples</Link></li>
-            <li><Link href="https://evolvez.co/gen-z-customer-lifecycle-and-brand-ambassadors/" target="_blank" className="underline hover:text-primary">Evolvez: Gen Z Customer Lifecycle and Brand Ambassadors</Link></li>
-            <li><Link href="https://www.zinrelo.com/blog/loyalty-rewards-program-examples/" target="_blank" className="underline hover:text-primary">Zinrelo: Loyalty Rewards Program Examples</Link></li>
-          </ul>
-        </div>
       </motion.div>
     </section>
   );
