@@ -8,7 +8,6 @@ import { useTheme } from "next-themes";
 import Link from "next/link";
 import { CampaignDialog } from "@/components/campaign-dialog";
 import { CampusAmbassadorDialog } from "@/components/campus-ambassador-dialog";
-import { NewsletterDialog } from "@/components/newsletter-dialog";
 
 export const HeroSection = () => {
   const { theme } = useTheme();
@@ -43,10 +42,17 @@ export const HeroSection = () => {
             We power campaigns that resonate with young audiences by tapping into culture, trends, and creator-led strategies.
           </p>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 w-full px-4">
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 w-full px-4">
             <CampaignDialog />
             <CampusAmbassadorDialog />
-            <NewsletterDialog />
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="text-xs sm:text-sm md:text-base px-4 py-2 sm:px-5 sm:py-3 md:px-6 md:py-4 w-full sm:w-auto min-w-[180px] sm:min-w-[200px] border-primary/50 hover:bg-primary/10 transition-all duration-300"
+            >
+              <Link href="/blog">GenZ Culture Lab</Link>
+            </Button>
           </div>
         </div>
 
