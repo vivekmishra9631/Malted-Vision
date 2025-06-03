@@ -1,4 +1,6 @@
 "use client";
+
+import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Instagram, Youtube, Camera, TrendingUp, Sparkles, BarChart, Palette } from "lucide-react";
@@ -10,9 +12,22 @@ import { NewsletterDialog } from "@/components/newsletter-dialog";
 
 export const HeroSection = () => {
   const { theme } = useTheme();
+
+  // Define the fade-in animation
+  const fadeIn = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
+  };
+
   return (
     <section className="container w-full">
-      <div className="grid place-items-center max-w-screen-xl gap-6 sm:gap-8 mx-auto py-12 sm:py-16 md:py-20 lg:py-32">
+      <motion.div
+        className="grid place-items-center max-w-screen-xl gap-6 sm:gap-8 mx-auto py-12 sm:py-16 md:py-20 lg:py-32"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={fadeIn}
+      >
         <div className="text-center space-y-6 sm:space-y-8">
           <div className="max-w-screen-md mx-auto text-center text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold">
             <h1>
@@ -128,7 +143,7 @@ export const HeroSection = () => {
 
           <div className="absolute bottom-0 left-0 w-full h-16 sm:h-20 md:h-24 lg:h-28 bg-gradient-to-b from-background/0 via-background/50 to-background rounded-lg"></div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };
