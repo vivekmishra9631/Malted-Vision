@@ -584,7 +584,7 @@ export default function BlogPage() {
                             <Tooltip
                                 contentStyle={{
                                     backgroundColor: "rgba(255, 255, 255, 0.9)", // Default for light mode
-                                    color: "##FBBF24",
+                                    color: "#FBBF24",
                                     // Use a className or inline style to toggle for dark mode
                                     // Example: backgroundColor: "rgba(31, 41, 55, 0.9)", // Dark gray for dark mode
                                     border: "1px solid #d1d5db",
