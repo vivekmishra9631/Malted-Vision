@@ -48,19 +48,19 @@ export const TeamSection = () => {
       ],
     },
     {
-      imageUrl: "/coo-m.jpg",
-      firstName: "Manvendra",
-      lastName: "Solanki",
+      imageUrl: "/cto.jpg",
+      firstName: "Shrikrushna",
+      lastName: "P.",
       positions: ["COO & Co-founder"],
       description: "Turning Gen Z chaos into campaign gold (and still finding time for chai).",
       socialNetworks: [
         {
           name: "LinkedIn",
-          url: "https://www.linkedin.com/in/manvendra-kumar-67096624b/",
+          url: "https://www.linkedin.com/in/shrikrushna-p-89a667334/",
         },
         {
           name: "X",
-          url: "https://x.com/ManvendraSolanki",
+          url: "https://x.com/shrikrushna2004",
         },
       ],
     },
