@@ -74,8 +74,8 @@ interface BlogPost {
     id: number;
     title: string;
     subtitle: string;
-    date: string;
-    readTime: string;
+    // date: string;
+    // readTime: string;
     sections: BlogSection[];
     footer: string;
 }
@@ -208,8 +208,8 @@ export default function BlogPage() {
         title: "The Indispensable Influence of Generation Z on India's Brand Landscape",
         subtitle:
             "Indian Gen Z: A transformative force driving $2 trillion in consumption by 2035, demanding authenticity, purpose, and digital fluency from brands.",
-        date: "June 3, 2025",
-        readTime: "15 min read",
+        // date: "June 3, 2025",
+        // readTime: "15 min read",
         sections: [
             {
                 title: "1. Introduction to Indian Gen Z",
@@ -705,8 +705,8 @@ export default function BlogPage() {
                     </h1>
                     <p className="text-lg text-primary">{blogPost.subtitle}</p>
                     <div className="text-sm text-muted-foreground flex justify-center gap-4">
-                        <span>{blogPost.date}</span>
-                        <span>{blogPost.readTime}</span>
+                        {/* <span>{blogPost.date}</span> */}
+                        {/* <span>{blogPost.readTime}</span> */}
                     </div>
                 </div>
 
