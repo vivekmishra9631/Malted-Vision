@@ -27,7 +27,7 @@ export const FooterSection = () => {
               alt="Malted Vision Logo" 
               width={36} 
               height={36} 
-              className="mr-2 rounded-lg border border-secondary"
+              className="mr-2 rounded-lg"
               priority
             />
             <h3 className="text-xl sm:text-2xl">Malted Vision</h3>

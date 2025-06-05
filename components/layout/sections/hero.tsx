@@ -49,8 +49,8 @@ export const HeroSection = () => {
               asChild
               variant="outline"
               size="lg"
-              className="text-xs sm:text-sm md:text-base px-4 py-2 sm:px-5 sm:py-3 md:px-6 md:py-4 w-full sm:w-auto min-w-[180px] sm:min-w-[200px] border-primary/50 hover:bg-primary/10 transition-all duration-300"
-            >
+              className="w-full xs:w-3/4 sm:w-1/2 md:w-1/3 font-bold hover:bg-primary hover:text-white transition-colors duration-300 border-2 border-primary/50 text-foreground text-xs xs:text-sm sm:text-base md:text-lg py-2 xs:py-3 sm:py-4"
+              >
               <Link href="/blog">GenZ Culture Lab</Link>
             </Button>
           </div>
