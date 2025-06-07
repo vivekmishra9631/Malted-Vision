@@ -63,7 +63,7 @@ export const AboutSection = () => {
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-6 sm:mt-8">
               <Button asChild variant="default" size="lg">
                 <Link
-                  href="https://www.irs.gov/pub/irs-pdf/f1040.pdf" // Dummy PDF link
+                  href="/pitch-d.pdf" // Dummy PDF link
                   download
                   target="_blank" // Open in new tab to ensure download works
                   rel="noopener noreferrer" // Security best practice for external links
