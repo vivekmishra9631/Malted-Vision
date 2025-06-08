@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import { Navbar } from "@/components/layout/navbar";
 import { ThemeProvider } from "@/components/layout/theme-provider";
-import { Toaster } from "sonner";
+import { ClientLayout } from "@/components/layout/client-layout"; // Import the ClientLayout
 import "@fontsource/inter/400.css";
 import "@fontsource/inter/600.css";
 import "@fontsource/inter/700.css";
+
 const inter = Inter({ subsets: ["latin"], weight: ["400", "600", "700"] });
 
 export const metadata: Metadata = {
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   description: "Connecting Brands with Gen Z Through Authentic Voices",
   openGraph: {
     type: "website",
-    url: "https://www.maltedvision.com/", // TODO: Replace with your actual deployed URL
+    url: "https://www.maltedvision.com/",
     title: "Malted Vision",
     description: "Connecting Brands with Gen Z Through Authentic Voices",
     images: [
@@ -29,11 +29,11 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    site: "https://www.maltedvision.com/", // TODO: Replace with your actual deployed URL
+    site: "https://www.maltedvision.com/",
     title: "Malted Vision",
     description: "Connecting Brands with Gen Z Through Authentic Voices",
     images: [
-      "https://res.cloudinary.com/dbzv9xfjp/image/upload/v1723499276/og-images/shadcn-vue.jpg", // TODO: Replace with your actual Twitter card image URL
+      "https://res.cloudinary.com/dbzv9xfjp/image/upload/v1723499276/og-images/shadcn-vue.jpg",
     ],
   },
   icons: {
@@ -57,15 +57,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar />
-          <main className="flex-1 w-full">{children}</main>
-          {/* Global Footer */}
-          <footer className="text-center py-8 border-t border-gray-300">
-            <p className="text-muted-foreground">
-              © 2025 Malted Vision. All rights reserved.
-            </p>
-          </footer>
-          <Toaster richColors position="top-right" />
+          <ClientLayout>{children}</ClientLayout>
         </ThemeProvider>
       </body>
     </html>

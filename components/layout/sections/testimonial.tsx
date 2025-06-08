@@ -18,6 +18,7 @@ import Image1 from "../../../public/Artboard 1.png";
 import Image2 from "../../../public/Artboard 2.png";
 import Image3 from "../../../public/Artboard 3.png";
 import Image4 from "../../../public/Artboard 4.png";
+import { motion } from "framer-motion";
 
 interface ReviewProps {
   image: StaticImageData;
@@ -54,6 +55,25 @@ const reviewList: ReviewProps[] = [
 ];
 
 export const TestimonialSection = () => {
+  // Animation variants for carousel cards
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (index: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        delay: index * 0.2, // Staggered animation for each card
+        ease: "easeOut",
+      },
+    }),
+    hover: {
+      y: -5,
+      boxShadow: "0 10px 20px rgba(0, 0, 0, 0.15)",
+      transition: { duration: 0.3 },
+    },
+  };
+
   return (
     <section id="testimonials" className="container py-24 sm:py-32">
       <div className="text-center mb-12">
@@ -69,32 +89,41 @@ export const TestimonialSection = () => {
           className="relative"
         >
           <CarouselContent>
-            {reviewList.map((review) => (
+            {reviewList.map((review, index) => (
               <CarouselItem
                 key={review.name}
                 className="md:basis-1/2 lg:basis-1/3 p-2"
               >
-                <Card className="bg-muted/50 dark:bg-card h-full flex flex-col justify-between">
-                  <CardHeader>
-                    <CardTitle className="text-lg font-semibold">
-                      {review.name}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="flex justify-center">
-                    <Image
-                      src={review.image}
-                      alt={review.name}
-                      width={300}
-                      height={300}
-                      className="object-cover"
-                      onError={(e) => {
-                        console.error(`Failed to load image for ${review.name}: ${review.image}`);
-                        e.currentTarget.src = "https://via.placeholder.com/300?text=Image+Not+Found";
-                      }}
-                      unoptimized
-                    />
-                  </CardContent>
-                </Card>
+                <motion.div
+                  custom={index}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={cardVariants}
+                  whileHover="hover"
+                >
+                  <Card className="bg-muted/50 dark:bg-card h-full flex flex-col justify-between transition-shadow duration-300">
+                    <CardHeader>
+                      <CardTitle className="text-lg font-semibold">
+                        {review.name}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex justify-center">
+                      <Image
+                        src={review.image}
+                        alt={review.name}
+                        width={300}
+                        height={300}
+                        className="object-cover"
+                        onError={(e) => {
+                          console.error(`Failed to load image for ${review.name}: ${review.image}`);
+                          e.currentTarget.src = "https://via.placeholder.com/300?text=Image+Not+Found";
+                        }}
+                        unoptimized
+                      />
+                    </CardContent>
+                  </Card>
+                </motion.div>
               </CarouselItem>
             ))}
           </CarouselContent>

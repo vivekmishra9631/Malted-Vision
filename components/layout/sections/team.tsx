@@ -13,6 +13,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { motion } from "framer-motion";
 
 interface TeamProps {
   imageUrl: string;
@@ -35,7 +36,7 @@ export const TeamSection = () => {
       firstName: "Vivek",
       lastName: "Mishra",
       positions: ["CEO & Founder"],
-      description: "Turning ‘meh’ into ‘send this to the group chat’ for brands.",
+      description: "Turning ‘meh’ into ‘send this to the group chat’ for brands.",
       socialNetworks: [
         {
           name: "LinkedIn",
@@ -69,7 +70,7 @@ export const TeamSection = () => {
       firstName: "Nikhil",
       lastName: "R.",
       positions: ["Head of Media"],
-      description: "I don’t make ads—I make scroll-stoppers your ex shares.",
+      description: "I don’t make ads—I make scroll-stoppers your ex shares.",
       socialNetworks: [
         {
           name: "LinkedIn",
@@ -81,7 +82,6 @@ export const TeamSection = () => {
         },
       ],
     },
-    // Removed Sarah Robinson's entry; can add a new team member here in the future
   ];
 
   const socialIcon = (socialName: string) => {
@@ -95,6 +95,31 @@ export const TeamSection = () => {
       default:
         return null;
     }
+  };
+
+  // Animation variants for cards
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (index: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        delay: index * 0.2, // Staggered animation for each card
+        ease: "easeOut",
+      },
+    }),
+    hover: {
+      y: -5,
+      boxShadow: "0 10px 20px rgba(0, 0, 0, 0.15)",
+      transition: { duration: 0.3 },
+    },
+  };
+
+  // Animation variants for social icons
+  const iconVariants = {
+    initial: { scale: 1 },
+    hover: { scale: 1.2, transition: { duration: 0.2 } },
   };
 
   return (
@@ -118,59 +143,72 @@ export const TeamSection = () => {
             { imageUrl, firstName, lastName, positions, socialNetworks, description },
             index
           ) => (
-            <Card
+            <motion.div
               key={index}
-              className="bg-muted/60 dark:bg-card flex flex-col h-full overflow-hidden group/hoverimg max-w-sm"
+              custom={index}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={cardVariants}
+              whileHover="hover"
             >
-              <CardHeader className="p-0 gap-0">
-                <div className="h-full overflow-hidden">
-                  <Image
-                    src={imageUrl}
-                    alt=""
-                    width={300}
-                    height={300}
-                    className="w-full aspect-square object-cover saturate-0 transition-all duration-200 ease-linear size-full group-hover/hoverimg:saturate-100 group-hover/hoverimg:scale-[1.01]"
-                  />
-                </div>
-                <CardTitle className="py-4 xs:py-5 sm:py-6 pb-3 xs:pb-4 sm:pb-4 px-4 xs:px-5 sm:px-6 text-base xs:text-lg sm:text-xl">
-                  {firstName}
-                  <span className="text-primary ml-1 xs:ml-2">{lastName}</span>
-                </CardTitle>
-              </CardHeader>
-              {positions.map((position, index) => (
-                <CardContent
-                  key={index}
-                  className={`pb-0 text-muted-foreground text-xs xs:text-sm sm:text-base ${
-                    index === positions.length - 1 && "pb-4 xs:pb-5 sm:pb-6"
-                  }`}
-                >
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger className="cursor-pointer">
-                        {position}
-                        {index < positions.length - 1 && <span>,</span>}
-                      </TooltipTrigger>
-                      <TooltipContent className="max-w-[90%] sm:max-w-xs p-2 sm:p-4">
-                        <p className="text-xs xs:text-sm sm:text-base">{description}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                </CardContent>
-              ))}
-
-              <CardFooter className="space-x-2 xs:space-x-3 sm:space-x-4 mt-auto">
-                {socialNetworks.map(({ name, url }, index) => (
-                  <Link
-                    key={index}
-                    href={url}
-                    target="_blank"
-                    className="hover:opacity-80 transition-all"
+              <Card className="bg-muted/60 dark:bg-card flex flex-col h-full overflow-hidden group/hoverimg max-w-sm transition-shadow duration-300">
+                <CardHeader className="p-0 gap-0">
+                  <div className="h-full overflow-hidden">
+                    <Image
+                      src={imageUrl}
+                      alt={`${firstName} ${lastName}`}
+                      width={300}
+                      height={300}
+                      className="w-full aspect-square object-cover transition-all duration-200 ease-linear size-full group-hover/hoverimg:scale-[1.01]"
+                    />
+                  </div>
+                  <CardTitle className="py-4 xs:py-5 sm:py-6 pb-3 xs:pb-4 sm:pb-4 px-4 xs:px-5 sm:px-6 text-base xs:text-lg sm:text-xl">
+                    {firstName}
+                    <span className="text-primary ml-1 xs:ml-2">{lastName}</span>
+                  </CardTitle>
+                </CardHeader>
+                {positions.map((position, idx) => (
+                  <CardContent
+                    key={idx}
+                    className={`pb-0 text-muted-foreground text-xs xs:text-sm sm:text-base ${
+                      idx === positions.length - 1 && "pb-4 xs:pb-5 sm:pb-6"
+                    }`}
                   >
-                    {socialIcon(name)}
-                  </Link>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger className="cursor-pointer">
+                          {position}
+                          {idx < positions.length - 1 && <span>,</span>}
+                        </TooltipTrigger>
+                        <TooltipContent className="max-w-[90%] sm:max-w-xs p-2 sm:p-4">
+                          <p className="text-xs xs:text-sm sm:text-base">{description}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </CardContent>
                 ))}
-              </CardFooter>
-            </Card>
+
+                <CardFooter className="space-x-2 xs:space-x-3 sm:space-x-4 mt-auto">
+                  {socialNetworks.map(({ name, url }, idx) => (
+                    <motion.div
+                      key={idx}
+                      variants={iconVariants}
+                      initial="initial"
+                      whileHover="hover"
+                    >
+                      <Link
+                        href={url}
+                        target="_blank"
+                        className="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-200"
+                      >
+                        {socialIcon(name)}
+                      </Link>
+                    </motion.div>
+                  ))}
+                </CardFooter>
+              </Card>
+            </motion.div>
           )
         )}
       </div>
