@@ -46,7 +46,7 @@ export const FooterSection = () => {
               &{" "}
               <Link
                 target="_blank"
-                href="https://www.linkedin.com/in/shrikrushna-p-89a667334/"
+                href="https://www.linkedin.com/in/shrikrushna-r-prajapati-89a667334/"
                 className="text-primary transition-all border-primary hover:border-b-2"
               >
                 Shrikrushna

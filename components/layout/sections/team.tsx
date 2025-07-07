@@ -57,7 +57,7 @@ export const TeamSection = () => {
       socialNetworks: [
         {
           name: "LinkedIn",
-          url: "https://www.linkedin.com/in/shrikrushna-p-89a667334/",
+          url: "https://www.linkedin.com/in/shrikrushna-r-prajapati-89a667334/",
         },
         {
           name: "X",

@@ -11,7 +11,7 @@ export const ClientLayout = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1200);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, []);
