@@ -85,7 +85,7 @@ export const TeamSection = () => {
     {
       imageUrl: "/Creative_Head.jpg",
       firstName: "Vishal",
-      lastName: "A.",
+      lastName: "D.",
       positions: ["Creative Head"],
       description: "Crafting visuals that captivate and convert.",
       socialNetworks: [
