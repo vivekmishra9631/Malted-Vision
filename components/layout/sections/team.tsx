@@ -176,12 +176,12 @@ export const TeamSection = () => {
             align: "start",
             loop: true,
             slidesToScroll: 1,
-            slidesToShow: 1,
-            breakpoints: {
-              "(min-height: 640px)": { slidesToShow: 2, slidesToScroll: 1 },
-              "(min-width: 758px)": { slidesToShow: 2, slidesToScroll: 2 },
-              "(min-width: 1024px)": { slidesToShow: 3, slidesToScroll: 3 },
-            },
+            // slidesToShow: 1,
+            // breakpoints: {
+            //   "(min-height: 640px)": { slidesToShow: 2, slidesToScroll: 1 },
+            //   "(min-width: 758px)": { slidesToShow: 2, slidesToScroll: 2 },
+            //   "(min-width: 1024px)": { slidesToShow: 3, slidesToScroll: 3 },
+            // },
           }}
           className="relative"
         >
