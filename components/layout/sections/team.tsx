@@ -12,7 +12,12 @@ import {
 } from "@/components/ui/card";
 import Image from "next/image";
 import Link from "next/link";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import {
   Carousel,
   CarouselContent,
@@ -38,6 +43,7 @@ interface SocialNetworkProps {
 
 export const TeamSection = () => {
   const teamList: TeamProps[] = [
+  
     {
       imageUrl: "/ceo.jpg",
       firstName: "Vivek",
@@ -83,7 +89,7 @@ export const TeamSection = () => {
       ],
     },
     {
-      imageUrl: "/CreativeHead.jpg",
+      imageUrl: "/Creative-head.jpg",
       firstName: "Vishal",
       lastName: "D.",
       positions: ["Creative Head"],
@@ -159,37 +165,24 @@ export const TeamSection = () => {
   return (
     <section
       id="team"
-      className="container mx-auto px-2 sm:px-4 md:px-6 lg:px-12 xl:px-20 py-10 sm:py-14 md:py-18 lg:py-24 min-h-screen flex flex-col justify-center items-center"
+      className="container py-24 sm:py-32"
     >
-      <div className="text-center mb-6 sm:mb-8 md:mb-10 lg:mb-12">
-        <h2 className="text-sm sm:text-base md:text-lg lg:text-xl text-primary/80 mb-2 sm:mb-3 md:mb-4 uppercase tracking-widest">
+      <div className="text-center mb-12">
+        <h2 className="text-sm text-primary/80 mb-2 uppercase tracking-widest">
           Our Team
         </h2>
-        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--chart-2))] neon">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--chart-2))]">
           Visionaries Behind the Venture
         </h2>
       </div>
 
-      <div className="w-full max-w-7xl overflow-x-auto">
-        <Carousel
-          opts={{
-            align: "start",
-            loop: true,
-            slidesToScroll: 1,
-            // slidesToShow: 1,
-            // breakpoints: {
-            //   "(min-width: 640px)": { slidesToShow: 2, slidesToScroll: 1 },
-            //   "(min-width: 768px)": { slidesToShow: 2, slidesToScroll: 2 },
-            //   "(min-width: 1024px)": { slidesToShow: 3, slidesToScroll: 3 },
-            // },
-          }}
-          className="relative"
-        >
-          <CarouselContent className="pl-1 sm:pl-2 md:pl-3 lg:pl-4 flex gap-4 sm:gap-6">
+      <div className="relative w-[80%] sm:w-[90%] lg:max-w-screen-xl mx-auto">
+        <Carousel opts={{ align: "start", loop: true }} className="relative">
+          <CarouselContent>
             {teamList.map((member, index) => (
               <CarouselItem
                 key={index}
-                className="basis-full sm:basis-1/2 md:basis-1/3 p-1 sm:p-2 md:p-3 flex-shrink-0"
+                className="md:basis-1/2 lg:basis-1/3 p-2"
               >
                 <motion.div
                   custom={index}
@@ -198,9 +191,8 @@ export const TeamSection = () => {
                   viewport={{ once: true }}
                   variants={cardVariants}
                   whileHover="hover"
-                  className="h-full w-full sm:max-w-sm"
                 >
-                  <Card className="bg-[hsl(var(--card)/0.95)] dark:bg-[hsl(var(--card))] flex flex-col h-full overflow-hidden transition-all duration-300 card-hover border-2 border-transparent hover:border-[hsl(var(--primary)/0.5)]">
+                  <Card className="bg-muted/50 dark:bg-card h-full flex flex-col justify-between">
                     <CardHeader className="p-0 relative overflow-hidden">
                       <motion.div
                         className="aspect-square overflow-hidden relative"
@@ -215,30 +207,24 @@ export const TeamSection = () => {
                           height={300}
                           className="w-full h-full object-cover"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 hover:opacity-90 transition-opacity duration-300 flex items-center justify-center">
-                          <span className="text-white text-lg sm:text-xl md:text-2xl font-bold text-shadow-lg neon">
-                            {member.firstName}
-                          </span>
-                        </div>
                       </motion.div>
-                      <CardTitle className="py-2 sm:py-3 md:py-4 px-2 sm:px-3 md:px-4 text-sm sm:text-base md:text-lg text-foreground">
-                        {member.firstName}{" "}
-                        <span className="text-[hsl(var(--primary))] ml-1 sm:ml-2">{member.lastName}</span>
+                      <CardTitle className="py-2 px-4 text-lg font-semibold">
+                        {member.firstName} <span className="text-[hsl(var(--primary))]">{member.lastName}</span>
                       </CardTitle>
                     </CardHeader>
-                    <CardContent className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm md:text-base text-muted-foreground">
+                    <CardContent className="px-4 py-2 text-sm text-muted-foreground">
                       <TooltipProvider>
                         <Tooltip>
                           <TooltipTrigger className="cursor-pointer hover:text-[hsl(var(--primary))]">
                             {member.positions.join(" / ")}
                           </TooltipTrigger>
-                          <TooltipContent className="max-w-[90%] sm:max-w-md p-2 sm:p-3 bg-[hsl(var(--card))] text-foreground shadow-md">
-                            <p className="text-xs sm:text-sm">{member.description}</p>
+                          <TooltipContent className="bg-card text-foreground p-2">
+                            <p className="text-xs">{member.description}</p>
                           </TooltipContent>
                         </Tooltip>
                       </TooltipProvider>
                     </CardContent>
-                    <CardFooter className="p-2 sm:p-3 md:p-4 space-x-2 sm:space-x-3 md:space-x-4 mt-auto">
+                    <CardFooter className="px-4 py-2 space-x-4">
                       {member.socialNetworks.map((network, netIndex) => (
                         <motion.div
                           key={netIndex}
@@ -250,7 +236,7 @@ export const TeamSection = () => {
                           <Link
                             href={network.url}
                             target="_blank"
-                            className="text-gray-500 dark:text-gray-400 hover:text-[hsl(var(--primary))] dark:hover:text-[hsl(var(--chart-2))] transition-colors duration-300"
+                            className="text-gray-500 hover:text-[hsl(var(--primary))]"
                           >
                             {socialIcon(network.name)}
                           </Link>
@@ -262,9 +248,10 @@ export const TeamSection = () => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <div className="absolute top-1/2 transform -translate-y-1/2 left-2 right-2 flex justify-between z-10">
-            <CarouselPrevious className="pointer-events-auto bg-primary/10 border-none text-foreground hover:bg-primary/30 hover:text-white rounded-full p-2 sm:p-3 transition-all duration-300" />
-            <CarouselNext className="pointer-events-auto bg-primary/10 border-none text-foreground hover:bg-primary/30 hover:text-white rounded-full p-2 sm:p-3 transition-all duration-300" />
+
+          <div className="absolute inset-0 flex items-center justify-between pointer-events-none">
+            <CarouselPrevious className="pointer-events-auto bg-transparent border-none text-foreground hover:bg-black/20 hover:text-white transition-colors -ml-4 sm:-ml-6 md:-ml-8" />
+            <CarouselNext className="pointer-events-auto bg-transparent border-none text-foreground hover:bg-black/20 hover:text-white transition-colors -mr-4 sm:-mr-6 md:-mr-8" />
           </div>
         </Carousel>
       </div>
