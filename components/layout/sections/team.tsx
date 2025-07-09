@@ -170,26 +170,26 @@ export const TeamSection = () => {
         </h2>
       </div>
 
-      <div className="w-full max-w-7xl">
+      <div className="w-full max-w-7xl overflow-x-auto">
         <Carousel
           opts={{
             align: "start",
             loop: true,
             slidesToScroll: 1,
-            // slidesToShow: 1,
-            // breakpoints: {
-            //   "(min-width: 640px)": { slidesToShow: 2, slidesToScroll: 1 },
-            //   "(min-width: 768px)": { slidesToShow: 2, slidesToScroll: 2 },
-            //   "(min-width: 1024px)": { slidesToShow: 3, slidesToScroll: 3 },
-            // },
+            slidesToShow: 1,
+            breakpoints: {
+              "(min-width: 640px)": { slidesToShow: 2, slidesToScroll: 1 },
+              "(min-width: 768px)": { slidesToShow: 2, slidesToScroll: 2 },
+              "(min-width: 1024px)": { slidesToShow: 3, slidesToScroll: 3 },
+            },
           }}
           className="relative"
         >
-          <CarouselContent className="pl-1 sm:pl-2 md:pl-3 lg:pl-4">
+          <CarouselContent className="pl-1 sm:pl-2 md:pl-3 lg:pl-4 flex gap-4 sm:gap-6">
             {teamList.map((member, index) => (
               <CarouselItem
                 key={index}
-                className="basis-full sm:basis-1/2 md:basis-1/3 p-1 sm:p-2 md:p-3 flex justify-center sm:justify-start"
+                className="basis-full sm:basis-1/2 md:basis-1/3 p-1 sm:p-2 md:p-3 flex-shrink-0"
               >
                 <motion.div
                   custom={index}
@@ -198,9 +198,9 @@ export const TeamSection = () => {
                   viewport={{ once: true }}
                   variants={cardVariants}
                   whileHover="hover"
-                  className="h-full"
+                  className="h-full w-full sm:max-w-sm"
                 >
-                  <Card className="bg-[hsl(var(--card)/0.95)] dark:bg-[hsl(var(--card))] flex flex-col h-full overflow-hidden max-w-xs sm:max-w-sm transition-all duration-300 card-hover border-2 border-transparent hover:border-[hsl(var(--primary)/0.5)]">
+                  <Card className="bg-[hsl(var(--card)/0.95)] dark:bg-[hsl(var(--card))] flex flex-col h-full overflow-hidden transition-all duration-300 card-hover border-2 border-transparent hover:border-[hsl(var(--primary)/0.5)]">
                     <CardHeader className="p-0 relative overflow-hidden">
                       <motion.div
                         className="aspect-square overflow-hidden relative"
@@ -262,9 +262,9 @@ export const TeamSection = () => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <div className="absolute inset-0 flex items-center justify-between pointer-events-none">
-            <CarouselPrevious className="pointer-events-auto bg-transparent border-none text-foreground hover:bg-[hsl(var(--primary)/0.2)] hover:text-white transition-all duration-300 -ml-2 sm:-ml-3 md:-ml-4" />
-            <CarouselNext className="pointer-events-auto bg-transparent border-none text-foreground hover:bg-[hsl(var(--primary)/0.2)] hover:text-white transition-all duration-300 -mr-2 sm:-mr-3 md:-mr-4" />
+          <div className="absolute top-1/2 transform -translate-y-1/2 left-2 right-2 flex justify-between z-10">
+            <CarouselPrevious className="pointer-events-auto bg-primary/10 border-none text-foreground hover:bg-primary/30 hover:text-white rounded-full p-2 sm:p-3 transition-all duration-300" />
+            <CarouselNext className="pointer-events-auto bg-primary/10 border-none text-foreground hover:bg-primary/30 hover:text-white rounded-full p-2 sm:p-3 transition-all duration-300" />
           </div>
         </Carousel>
       </div>

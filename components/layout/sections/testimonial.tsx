@@ -18,6 +18,7 @@ import Image1 from "../../../public/Artboard 1.png";
 import Image2 from "../../../public/Artboard 2.png";
 import Image3 from "../../../public/Artboard 3.png";
 import Image4 from "../../../public/Artboard 4.png";
+import Image5 from "../../../public/Artboard 5.png";
 import { motion } from "framer-motion";
 
 interface ReviewProps {
@@ -49,6 +50,12 @@ const reviewList: ReviewProps[] = [
   {
     image: Image4,
     name: "ICICI Bank",
+    review: "The team’s expertise in content creation made our brand stand out. Amazing work!",
+    rating: 4,
+  },
+  {
+    image: Image5,
+    name: "Realme India",
     review: "The team’s expertise in content creation made our brand stand out. Amazing work!",
     rating: 4,
   },
