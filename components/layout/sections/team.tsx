@@ -83,7 +83,7 @@ export const TeamSection = () => {
       ],
     },
     {
-      imageUrl: "/Creative_Head.jpg",
+      imageUrl: "/CreativeHead.jpg",
       firstName: "Vishal",
       lastName: "D.",
       positions: ["Creative Head"],
@@ -159,7 +159,7 @@ export const TeamSection = () => {
   return (
     <section
       id="team"
-      className="container mx-auto px-4 sm:px-6 lg:px-12 xl:px-20 py-10 sm:py-14 md:py-18 lg:py-24 min-h-[70vh] flex flex-col justify-center items-center"
+      className="container mx-auto px-2 sm:px-4 md:px-6 lg:px-12 xl:px-20 py-10 sm:py-14 md:py-18 lg:py-24 min-h-screen flex flex-col justify-center items-center"
     >
       <div className="text-center mb-6 sm:mb-8 md:mb-10 lg:mb-12">
         <h2 className="text-sm sm:text-base md:text-lg lg:text-xl text-primary/80 mb-2 sm:mb-3 md:mb-4 uppercase tracking-widest">
@@ -176,18 +176,21 @@ export const TeamSection = () => {
             align: "start",
             loop: true,
             slidesToScroll: 1,
-            // slidesToShow: 1,
-            // breakpoints: {
-            //   "(min-height: 640px)": { slidesToShow: 2, slidesToScroll: 1 },
-            //   "(min-width: 758px)": { slidesToShow: 2, slidesToScroll: 2 },
-            //   "(min-width: 1024px)": { slidesToShow: 3, slidesToScroll: 3 },
-            // },
+            slidesToShow: 1,
+            breakpoints: {
+              "(min-width: 640px)": { slidesToShow: 2, slidesToScroll: 1 },
+              "(min-width: 768px)": { slidesToShow: 2, slidesToScroll: 2 },
+              "(min-width: 1024px)": { slidesToShow: 3, slidesToScroll: 3 },
+            },
           }}
           className="relative"
         >
-          <CarouselContent className="pl-2 md:pl-4 lg:pl-6 xl:pl-10">
+          <CarouselContent className="pl-1 sm:pl-2 md:pl-3 lg:pl-4">
             {teamList.map((member, index) => (
-              <CarouselItem key={index} className="basis-full sm:basis-1/2 md:basis-1/3 p-1 sm:p-2 md:p-3">
+              <CarouselItem
+                key={index}
+                className="basis-full sm:basis-1/2 md:basis-1/3 p-1 sm:p-2 md:p-3 flex justify-center sm:justify-start"
+              >
                 <motion.div
                   custom={index}
                   initial="hidden"
@@ -197,10 +200,10 @@ export const TeamSection = () => {
                   whileHover="hover"
                   className="h-full"
                 >
-                  <Card className="bg-[hsl(var(--card)/0.95)] dark:bg-[hsl(var(--card))] flex flex-col h-full overflow-hidden max-w-sm transition-all duration-300 card-hover border-2 border-transparent hover:border-[hsl(var(--primary)/0.5)]">
+                  <Card className="bg-[hsl(var(--card)/0.95)] dark:bg-[hsl(var(--card))] flex flex-col h-full overflow-hidden max-w-xs sm:max-w-sm transition-all duration-300 card-hover border-2 border-transparent hover:border-[hsl(var(--primary)/0.5)]">
                     <CardHeader className="p-0 relative overflow-hidden">
                       <motion.div
-                        className="h-64 sm:h-72 md:h-80 overflow-hidden relative"
+                        className="aspect-square overflow-hidden relative"
                         variants={imageVariants}
                         initial="initial"
                         whileHover="hover"
@@ -213,17 +216,17 @@ export const TeamSection = () => {
                           className="w-full h-full object-cover"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 hover:opacity-90 transition-opacity duration-300 flex items-center justify-center">
-                          <span className="text-white text-xl sm:text-2xl md:text-3xl font-bold text-shadow-lg neon">
+                          <span className="text-white text-lg sm:text-xl md:text-2xl font-bold text-shadow-lg neon">
                             {member.firstName}
                           </span>
                         </div>
                       </motion.div>
-                      <CardTitle className="py-3 sm:py-4 md:py-5 px-3 sm:px-4 md:px-5 text-sm sm:text-base md:text-lg lg:text-xl text-foreground">
+                      <CardTitle className="py-2 sm:py-3 md:py-4 px-2 sm:px-3 md:px-4 text-sm sm:text-base md:text-lg text-foreground">
                         {member.firstName}{" "}
                         <span className="text-[hsl(var(--primary))] ml-1 sm:ml-2">{member.lastName}</span>
                       </CardTitle>
                     </CardHeader>
-                    <CardContent className="p-3 sm:p-4 md:p-5 text-xs sm:text-sm md:text-base text-muted-foreground">
+                    <CardContent className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm md:text-base text-muted-foreground">
                       <TooltipProvider>
                         <Tooltip>
                           <TooltipTrigger className="cursor-pointer hover:text-[hsl(var(--primary))]">
@@ -235,7 +238,7 @@ export const TeamSection = () => {
                         </Tooltip>
                       </TooltipProvider>
                     </CardContent>
-                    <CardFooter className="p-3 sm:p-4 md:p-5 space-x-2 sm:space-x-3 md:space-x-4 mt-auto">
+                    <CardFooter className="p-2 sm:p-3 md:p-4 space-x-2 sm:space-x-3 md:space-x-4 mt-auto">
                       {member.socialNetworks.map((network, netIndex) => (
                         <motion.div
                           key={netIndex}
@@ -260,8 +263,8 @@ export const TeamSection = () => {
             ))}
           </CarouselContent>
           <div className="absolute inset-0 flex items-center justify-between pointer-events-none">
-            <CarouselPrevious className="pointer-events-auto bg-transparent border-none text-foreground hover:bg-[hsl(var(--primary)/0.2)] hover:text-white transition-all duration-300 -ml-2 sm:-ml-3 md:-ml-4 lg:-ml-5" />
-            <CarouselNext className="pointer-events-auto bg-transparent border-none text-foreground hover:bg-[hsl(var(--primary)/0.2)] hover:text-white transition-all duration-300 -mr-2 sm:-mr-3 md:-mr-4 lg:-mr-5" />
+            <CarouselPrevious className="pointer-events-auto bg-transparent border-none text-foreground hover:bg-[hsl(var(--primary)/0.2)] hover:text-white transition-all duration-300 -ml-2 sm:-ml-3 md:-ml-4" />
+            <CarouselNext className="pointer-events-auto bg-transparent border-none text-foreground hover:bg-[hsl(var(--primary)/0.2)] hover:text-white transition-all duration-300 -mr-2 sm:-mr-3 md:-mr-4" />
           </div>
         </Carousel>
       </div>
