@@ -29,12 +29,14 @@ export const HeroSection = () => {
   // Data for previous work using your local assets
   const previousWork = [
     { type: "video", src: "/Video1.mp4", title: "Gen Z Campaign 2024" },
+
     { type: "image", src: "/Photo1.jpg", title: "Brand Activation Event" },
-    { type: "video", src: "/Video2.mp4", title: "Product Launch Video" },
     { type: "image", src: "/Photo2.jpg", title: "Social Media Takeover" },
+    { type: "video", src: "/Video2.mp4", title: "Product Launch Video" },
     { type: "image", src: "/Photo3.jpg", title: "Creative Workshop" },
     { type: "image", src: "/Photo4.jpg", title: "Live Event Snapshot" },
     { type: "image", src: "/Photo5.jpg", title: "Audience Engagement" },
+    { type: "video", src: "/Video3.mp4", title: "Product Launch Video" },
     { type: "image", src: "/Photo6.jpg", title: "Audience Engagement" },
     { type: "image", src: "/Photo7.jpg", title: "Audience Engagement" },
     { type: "image", src: "/Photo8.jpg", title: "Audience Engagement" },
