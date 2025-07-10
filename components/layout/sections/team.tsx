@@ -171,7 +171,7 @@ export const TeamSection = () => {
         <h2 className="text-sm text-primary/80 mb-2 uppercase tracking-widest">
           Our Team
         </h2>
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--chart-2))]">
+        <h2 className="text-3xl md:text-4xl font-bold">
           Visionaries Behind the Venture
         </h2>
       </div>

@@ -35,6 +35,11 @@ export const HeroSection = () => {
     { type: "image", src: "/Photo3.jpg", title: "Creative Workshop" },
     { type: "image", src: "/Photo4.jpg", title: "Live Event Snapshot" },
     { type: "image", src: "/Photo5.jpg", title: "Audience Engagement" },
+    { type: "image", src: "/Photo6.jpg", title: "Audience Engagement" },
+    { type: "image", src: "/Photo7.jpg", title: "Audience Engagement" },
+    { type: "image", src: "/Photo8.jpg", title: "Audience Engagement" },
+    { type: "image", src: "/Photo9.jpg", title: "Audience Engagement" },
+    { type: "image", src: "/Photo10.jpg", title: "Audience Engagement" },
   ];
 
   return (
