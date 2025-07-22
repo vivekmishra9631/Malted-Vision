@@ -3,28 +3,7 @@
 import GithubIcon from "@/components/icons/github-icon";
 import LinkedInIcon from "@/components/icons/linkedin-icon";
 import XIcon from "@/components/icons/x-icon";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardFooter,
-} from "@/components/ui/card";
 import Image from "next/image";
-import Link from "next/link";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
 import { motion } from "framer-motion";
 
 interface TeamProps {
@@ -43,7 +22,6 @@ interface SocialNetworkProps {
 
 export const TeamSection = () => {
   const teamList: TeamProps[] = [
-  
     {
       imageUrl: "/ceo.jpg",
       firstName: "Vivek",
@@ -112,19 +90,6 @@ export const TeamSection = () => {
     },
   ];
 
-  const socialIcon = (socialName: string) => {
-    switch (socialName) {
-      case "LinkedIn":
-        return <LinkedInIcon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" />;
-      case "Github":
-        return <GithubIcon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" />;
-      case "X":
-        return <XIcon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" />;
-      default:
-        return null;
-    }
-  };
-
   const cardVariants = {
     hidden: { opacity: 0, y: 50 },
     visible: (index: number) => ({
@@ -143,25 +108,6 @@ export const TeamSection = () => {
     },
   };
 
-  const iconVariants = {
-    initial: { scale: 1, rotate: 0 },
-    hover: {
-      scale: 1.3,
-      rotate: 360,
-      color: "hsl(var(--primary))",
-      transition: { duration: 0.6, ease: "easeInOut" },
-    },
-  };
-
-  const imageVariants = {
-    initial: { scale: 1, filter: "brightness(100%)" },
-    hover: {
-      scale: 1.1,
-      filter: "brightness(120%)",
-      transition: { duration: 0.5, ease: "easeOut" },
-    },
-  };
-
   return (
     <section
       id="team"
@@ -176,84 +122,38 @@ export const TeamSection = () => {
         </h2>
       </div>
 
-      <div className="relative w-[80%] sm:w-[90%] lg:max-w-screen-xl mx-auto">
-        <Carousel opts={{ align: "start", loop: true }} className="relative">
-          <CarouselContent>
-            {teamList.map((member, index) => (
-              <CarouselItem
-                key={index}
-                className="md:basis-1/2 lg:basis-1/3 p-2"
-              >
-                <motion.div
-                  custom={index}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  variants={cardVariants}
-                  whileHover="hover"
-                >
-                  <Card className="bg-muted/50 dark:bg-card h-full flex flex-col justify-between">
-                    <CardHeader className="p-0 relative overflow-hidden">
-                      <motion.div
-                        className="aspect-square overflow-hidden relative"
-                        variants={imageVariants}
-                        initial="initial"
-                        whileHover="hover"
-                      >
-                        <Image
-                          src={member.imageUrl}
-                          alt={`${member.firstName} ${member.lastName}`}
-                          width={300}
-                          height={300}
-                          className="w-full h-full object-cover"
-                        />
-                      </motion.div>
-                      <CardTitle className="py-2 px-4 text-lg font-semibold">
-                        {member.firstName} <span className="text-[hsl(var(--primary))]">{member.lastName}</span>
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="px-4 py-2 text-sm text-muted-foreground">
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger className="cursor-pointer hover:text-[hsl(var(--primary))]">
-                            {member.positions.join(" / ")}
-                          </TooltipTrigger>
-                          <TooltipContent className="bg-card text-foreground p-2">
-                            <p className="text-xs">{member.description}</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-                    </CardContent>
-                    <CardFooter className="px-4 py-2 space-x-4">
-                      {member.socialNetworks.map((network, netIndex) => (
-                        <motion.div
-                          key={netIndex}
-                          variants={iconVariants}
-                          initial="initial"
-                          whileHover="hover"
-                          className="group"
-                        >
-                          <Link
-                            href={network.url}
-                            target="_blank"
-                            className="text-gray-500 hover:text-[hsl(var(--primary))]"
-                          >
-                            {socialIcon(network.name)}
-                          </Link>
-                        </motion.div>
-                      ))}
-                    </CardFooter>
-                  </Card>
-                </motion.div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-
-          <div className="absolute inset-0 flex items-center justify-between pointer-events-none">
-            <CarouselPrevious className="pointer-events-auto bg-transparent border-none text-foreground hover:bg-black/20 hover:text-white transition-colors -ml-4 sm:-ml-6 md:-ml-8" />
-            <CarouselNext className="pointer-events-auto bg-transparent border-none text-foreground hover:bg-black/20 hover:text-white transition-colors -mr-4 sm:-mr-6 md:-mr-8" />
-          </div>
-        </Carousel>
+      <div className="grid grid-cols-3 gap-6 sm:gap-8 max-w-screen-lg mx-auto">
+        {teamList.map((member, index) => (
+          <motion.div
+            key={index}
+            custom={index}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={cardVariants}
+            whileHover="hover"
+            className="flex flex-col items-center"
+          >
+            <div className="relative w-40 h-40 sm:w-48 sm:h-48 bg-muted/50 dark:bg-card rounded-full overflow-hidden">
+              <Image
+                src={member.imageUrl}
+                alt={`${member.firstName} ${member.lastName}`}
+                width={192}
+                height={192}
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  console.error(`Failed to load image for ${member.firstName} ${member.lastName}: ${member.imageUrl}`);
+                  e.currentTarget.src = "https://via.placeholder.com/192?text=Image+Not+Found";
+                }}
+              />
+            </div>
+            <div className="mt-2 text-center">
+              <p className="text-lg font-semibold">
+                {member.firstName} {member.lastName}
+              </p>
+            </div>
+          </motion.div>
+        ))}
       </div>
     </section>
   );
