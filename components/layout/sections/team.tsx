@@ -33,17 +33,7 @@ export const TeamSection = () => {
         { name: "X", url: "https://x.com/VivekMi77834875" },
       ],
     },
-    {
-      imageUrl: "/cto.jpg",
-      firstName: "Shrikrushna",
-      lastName: "P.",
-      positions: ["COO & Co-founder"],
-      description: "Turning Gen Z chaos into campaign gold (and still finding time for chai).",
-      socialNetworks: [
-        { name: "LinkedIn", url: "https://www.linkedin.com/in/shrikrushna-r-prajapati-89a667334/" },
-        { name: "X", url: "https://x.com/shrikrushna2004" },
-      ],
-    },
+   
     {
       imageUrl: "/coo-m.jpg",
       firstName: "Manvendra",

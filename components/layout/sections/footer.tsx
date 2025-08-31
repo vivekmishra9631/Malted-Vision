@@ -41,16 +41,9 @@ export const FooterSection = () => {
                 href="https://www.linkedin.com/in/vivek-mishra-27622a1b7/"
                 className="text-primary transition-all border-primary hover:border-b-2"
               >
-                Vivek
+                Vivek Mishra 
               </Link>{" "}
-              &{" "}
-              <Link
-                target="_blank"
-                href="https://www.linkedin.com/in/shrikrushna-r-prajapati-89a667334/"
-                className="text-primary transition-all border-primary hover:border-b-2"
-              >
-                Shrikrushna
-              </Link>
+              &{" "} Team
             </h3>
           </section>
         </div>
